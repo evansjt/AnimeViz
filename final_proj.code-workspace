@@ -7,13 +7,31 @@
 	"settings": {},
 	"launch": {
 		"configurations": [
-		{
-			"name": "Launch Chrome",
-			"request": "launch",
-			"type": "chrome",
-			"url": "http://localhost:3000",
-			"webRoot": "${workspaceFolder}"
-		}
+			{
+				"command": "npm run dev",
+				"name": "Debug Dev",
+				"request": "launch",
+				"type": "node-terminal"
+			},
+			{
+				"command": "npm run backend",
+				"name": "Debug Backend",
+				"request": "launch",
+				"type": "node-terminal"
+			},
+			{
+				"command": "npm run frontend",
+				"name": "Debug Frontend",
+				"request": "launch",
+				"type": "node-terminal"
+			},
+			{
+				"name": "Launch Chrome",
+				"request": "launch",
+				"type": "chrome",
+				"url": "http://localhost:3000",
+				"webRoot": "${workspaceFolder}"
+			}
 		]
 	}
 }
