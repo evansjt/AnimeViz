@@ -1,0 +1,1 @@
+SELECT DISTINCT dem_id, name FROM Demographic ORDER BY lower(name) ASC;

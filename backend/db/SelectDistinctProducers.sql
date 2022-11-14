@@ -1,0 +1,1 @@
+SELECT DISTINCT prod_id, name FROM Producer ORDER BY lower(name) ASC;
