@@ -1,0 +1,1 @@
+SELECT DISTINCT theme_id, name FROM Theme ORDER BY lower(name) ASC;

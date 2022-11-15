@@ -1,0 +1,1 @@
+SELECT DISTINCT gen_id, name FROM Genre ORDER BY lower(name) ASC;
