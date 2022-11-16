@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import fs from 'fs';
+import sqlite3, { Database } from 'sqlite3';
 import { Anime } from './models/Anime.js';
 import { Demographic } from './models/Demographic.js';
 import { Genre } from './models/Genre.js';
@@ -7,61 +8,38 @@ import { Licensor } from './models/Licensor.js';
 import { Producer } from './models/Producer.js';
 import { Studio } from './models/Studio.js';
 import { Theme } from './models/Theme.js';
-import sqlite3 from 'sqlite3';
-
-var db = null;
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
- * Iterates through all of the pages of the Jikan.moe API and populates a
- * local database with the entries from these pages.
- */
-async function retrieveAllAnime() {
-    let firstPage = await getNthPageOfAnime(1);
-    if (firstPage == undefined) return;
-    appendAnimeDB(firstPage);
-
-    var numPages = firstPage['pagination']['last_visible_page']
-
-    for (let i = 2; i < numPages + 1; i++) {
-        let nextPage = await getNthPageOfAnime(i);
-        if (nextPage == undefined) return;
-        appendAnimeDB(nextPage);
-    }
-}
-
-/**
- * Uses a REST API GET request to fetch information relating to the nth page of
- * the Jikan.moe API.
+ * Runs multiple queries from a .sql file on the local database.
  * 
- * @param {number} n - An integer parameter representing a page number
- * @returns {Object} A object representing a page of the anime API
+ * @param {Database} db - the local database
+ * @param {string} sqlFilename - name of the .sql file being queried
  */
-const getNthPageOfAnime = async (n) => {
-    await sleep(1000 / 3);
-    return await fetch("https://api.jikan.moe/v4/anime?" + new URLSearchParams({
-        page: n
-    }),
-        {
-            method: "GET"
-        }).then((response) => {
-            if (response.ok)
-                return response.json()
-            else
-                throw Error(response.statusText);
-        }).catch((error) => console.log(error));
+async function runMultipleQueries(db, sqlFilename) {
+    let dataSql = fs.readFileSync(sqlFilename).toString()
+        .replace(/\n/g, "")
+        .split(';')
+        .filter(n => n);
+
+    dataSql.forEach(query => {
+        db.run(query, err => {
+            if (err)
+                return console.error(err.message);
+        });
+    });
 }
 
 /**
  * Transfers entries pulled from the API page to the local database.
  * 
- * @param {Object} A object representing a page of the anime API
+ * @param {Database} db - The local database
+ * @param {object} page - the current page
  */
-function appendAnimeDB(page) {
+function updatePageInDB(db, page) {
     page['data'].forEach(animeData => {
         let anime = new Anime(animeData);
         let animePlaceholders = Object.values(anime).map(() => '?').join(',');
-        let sqlQuery = `INSERT OR IGNORE INTO Anime(${Object.keys(anime)}) VALUES (${animePlaceholders})`;
+        let sqlQuery = `INSERT OR REPLACE INTO Anime(${Object.keys(anime)}) VALUES (${animePlaceholders})`;
         db.run(sqlQuery, Object.values(anime), err => {
             if (err) return console.error(err.message);
         });
@@ -94,49 +72,45 @@ function appendAnimeDB(page) {
 }
 
 /**
- * Runs multiple queries from a .sql file.
- * 
- * @param {string} sqlFilename - name of the .sql file being queried
+ * Fetches the metadata from Jikan.API and updates the local database with that metadata.
  */
-async function runMultipleQueries(sqlFilename) {
-    let dataSql = fs.readFileSync(sqlFilename).toString()
-        .replace(/\n/g, "")
-        .split(';')
-        .filter(n => n);
+export async function fetchMetaData() {
 
-    dataSql.forEach(query => {
-        db.run(query, err => {
-            if (err)
-                return console.error(err.message);
-        });
-    });
+    /**
+     * Fetches data from the Jikan.moe /anime API at page n.
+     * If a fetch fails (usually due to error 429), the fetch retries
+     * itself for up to three times.
+     * 
+     * @param {number} n - the page number
+     * @param {number} retries - the current number of retries left 
+     * @returns {object} A JSON object containing data related to the successful response.
+     */
+    async function fetchRetry(n, retries = 3) {
+        let url = `https://api.jikan.moe/v4/anime?page=${n}`;
+        return await fetch(url)
+            .then(async (res) => {
+                if (res.ok) return res.json();
+                if (retries > 0)
+                    return await fetchRetry(n, retries - 1);
+                throw new Error(res);
+            })
+            .catch(err => console.log(err));
+    }
+
+    const db = new sqlite3.Database('./db/AnimeDB.db');
+
+    await runMultipleQueries(db, './db/CreateAllTables.sql');
+
+    let response = await fetch('https://api.jikan.moe/v4/anime')
+        .then(async (x) => await x.json())
+        .catch(err => console.log(err));
+    let numPages = response.pagination.last_visible_page;
+
+    for (let i = 1; i <= 1; i++) {
+        let response = await fetchRetry(i);
+        updatePageInDB(db, response);
+    }
+
+    db.close();
+    console.log("Database updated.");
 }
-
-const deleteUpdateDB = async () => {
-    if (fs.existsSync('./db/AnimeDB-updated.db'))
-        fs.unlinkSync('./db/AnimeDB-updated.db');
-};
-
-async function main() {
-    db = new sqlite3.Database('./db/AnimeDB-updated.db');
-
-    db.serialize(async () => {
-        await runMultipleQueries('./db/CreateAllTables.sql');
-        await retrieveAllAnime();
-        db.close(() => {
-            fs.rename('./db/AnimeDB-updated.db', './db/AnimeDB.db', err => {
-                if (err)
-                    return console.error(err.message);
-            });
-        });
-    });
-
-}
-
-main();
-
-process.on('exit', () => { deleteUpdateDB(); process.exit(); });
-process.on('SIGINT', () => { deleteUpdateDB(); process.exit(); });
-process.on('SIGUSR1', () => { deleteUpdateDB(); process.exit(); });
-process.on('SIGUSR2', () => { deleteUpdateDB(); process.exit(); });
-process.on('uncaughtException', () => { deleteUpdateDB(); process.exit(); });

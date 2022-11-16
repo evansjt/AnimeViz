@@ -1,4 +1,4 @@
-CREATE TABLE "Anime" (
+CREATE TABLE IF NOT EXISTS "Anime" (
 	"mal_id"	INTEGER NOT NULL UNIQUE,
 	"title"	TEXT NOT NULL,
 	"title_english"	TEXT,
@@ -23,37 +23,37 @@ CREATE TABLE "Anime" (
 	"broadcast_time"	INTEGER,
 	PRIMARY KEY("mal_id")
 );
-CREATE TABLE "Demographic" (
+CREATE TABLE IF NOT EXISTS "Demographic" (
 	"dem_id"	INTEGER NOT NULL,
 	"mal_id"	INTEGER NOT NULL,
 	"name"	TEXT NOT NULL,
 	FOREIGN KEY("mal_id") REFERENCES "Anime"("mal_id") ON DELETE CASCADE
 );
-CREATE TABLE "Genre" (
+CREATE TABLE IF NOT EXISTS "Genre" (
 	"gen_id"	INTEGER NOT NULL,
 	"mal_id"	INTEGER NOT NULL,
 	"name"	TEXT NOT NULL,
 	FOREIGN KEY("mal_id") REFERENCES "Anime"("mal_id") ON DELETE CASCADE
 );
-CREATE TABLE "Licensor" (
+CREATE TABLE IF NOT EXISTS "Licensor" (
 	"lic_id"	INTEGER NOT NULL,
 	"mal_id"	INTEGER NOT NULL,
 	"name"	TEXT NOT NULL,
 	FOREIGN KEY("mal_id") REFERENCES "Anime"("mal_id") ON DELETE CASCADE
 );
-CREATE TABLE "Producer" (
+CREATE TABLE IF NOT EXISTS "Producer" (
 	"prod_id"	INTEGER NOT NULL,
 	"mal_id"	INTEGER NOT NULL,
 	"name"	TEXT NOT NULL,
 	FOREIGN KEY("mal_id") REFERENCES "Anime"("mal_id") ON DELETE CASCADE
 );
-CREATE TABLE "Studio" (
+CREATE TABLE IF NOT EXISTS "Studio" (
 	"stud_id"	INTEGER NOT NULL,
 	"mal_id"	INTEGER NOT NULL,
 	"name"	TEXT NOT NULL,
 	FOREIGN KEY("mal_id") REFERENCES "Anime"("mal_id") ON DELETE CASCADE
 );
-CREATE TABLE "Theme" (
+CREATE TABLE IF NOT EXISTS "Theme" (
 	"theme_id"	INTEGER NOT NULL,
 	"mal_id"	INTEGER NOT NULL,
 	"name"	TEXT NOT NULL,
