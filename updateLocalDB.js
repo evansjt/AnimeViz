@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import fs from 'fs';
-import sqlite3, { Database } from 'sqlite3';
+import sqlite3 from 'sqlite3';
 import { Anime } from './models/Anime.js';
 import { Demographic } from './models/Demographic.js';
 import { Genre } from './models/Genre.js';
@@ -61,7 +61,11 @@ function updatePageInDB(db, page) {
             let table = animeData[tableName].map(t => new Table(t, animeData['mal_id']));
             if (table != undefined && table.length > 0) {
                 let placeholders = table.map(t => `(${Object.values(t).map(() => '?').join(',')})`).join(',');
-                let sqlQuery = `INSERT INTO ${table[0].toString()}(${Object.keys(table[0])}) VALUES ${placeholders}`;
+                let sqlQuery = `DELETE FROM ${table[0].toString()} WHERE mal_id = ${animeData['mal_id']}`;
+                db.run(sqlQuery, err => {
+                    if (err) return console.error(err.message);
+                });
+                sqlQuery = `INSERT INTO ${table[0].toString()}(${Object.keys(table[0])}) VALUES ${placeholders}`;
                 let values = Object.values(table).map(t => Object.values(t)).flat();
                 db.run(sqlQuery, values, err => {
                     if (err) return console.error(err.message);
@@ -88,13 +92,17 @@ export async function fetchMetaData() {
     async function fetchRetry(n, retries = 3) {
         let url = `https://api.jikan.moe/v4/anime?page=${n}`;
         return await fetch(url)
-            .then(async (res) => {
+            .then(res => {
                 if (res.ok) return res.json();
                 if (retries > 0)
-                    return await fetchRetry(n, retries - 1);
+                    return fetchRetry(n, retries - 1);
                 throw new Error(res);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                if (retries > 0)
+                    return fetchRetry(n, retries - 1);
+                throw new Error(err);
+            });
     }
 
     const db = new sqlite3.Database('./db/AnimeDB.db');
@@ -102,14 +110,12 @@ export async function fetchMetaData() {
     await runMultipleQueries(db, './db/CreateAllTables.sql');
 
     let response = await fetch('https://api.jikan.moe/v4/anime')
-        .then(async (x) => await x.json())
+        .then(x => x.json())
         .catch(err => console.log(err));
     let numPages = response.pagination.last_visible_page;
 
-    for (let i = 1; i <= 1; i++) {
-        let response = await fetchRetry(i);
-        updatePageInDB(db, response);
-    }
+    for (let i = 1; i <= numPages; i++)
+        await fetchRetry(i).then(resJSON => updatePageInDB(db, resJSON));
 
     db.close();
     console.log("Database updated.");
