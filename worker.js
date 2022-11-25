@@ -7,6 +7,6 @@ const app = express();
 
 app.listen(port, async() => {
     console.log("Worker application listening.....");
-    while(true)
+    //while(true)
        await fetchMetaData();
 });
