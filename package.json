@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/evansjt/AnimeViz#readme",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "express": "^4.18.2",
     "node-fetch": "^3.3.0",
+    "pg-promise": "^10.15.3",
     "sqlite3": "^5.1.2"
   },
   "devDependencies": {

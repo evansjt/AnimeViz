@@ -1,11 +1,17 @@
 export class Theme {
-    constructor(theme=theme, fk=fk) {
-        this.theme_id = theme['mal_id'];
-        this.mal_id = fk;
-        this.name = theme['name'];
+    constructor(theme = null, fk = null) {
+        if (theme && fk) {
+            this.theme_id = theme['mal_id'];
+            this.mal_id = fk;
+            this.name = theme['name'];
+        }
     }
 
     toString() {
-        return "Theme";
+        return "themes";
+    }
+
+    getSQLScript() {
+        return 'db/UpsertTheme.sql';
     }
 }

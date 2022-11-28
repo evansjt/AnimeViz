@@ -1,11 +1,17 @@
 export class Demographic {
-    constructor(demographic=demographic, fk=fk) {
-        this.dem_id = demographic['mal_id'];
-        this.mal_id = fk;
-        this.name = demographic['name'];
+    constructor(demographic = null, fk = null) {
+        if (demographic && fk) {
+            this.dem_id = demographic['mal_id'];
+            this.mal_id = fk;
+            this.name = demographic['name'];
+        }
     }
 
     toString() {
-        return "Demographic";
+        return "demographics";
+    }
+
+    getSQLScript() {
+        return 'db/UpsertDemographic.sql';
     }
 }

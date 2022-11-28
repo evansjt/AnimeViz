@@ -1,12 +1,14 @@
 import express from "express";
-import { fetchMetaData } from "./updateLocalDB.js";
+import { fetchMetaData } from "./updateDB.js";
 
 const port = process.env.PORT || 8080;
 
 const app = express();
 
-app.listen(port, async() => {
+app.listen(port, async () => {
     console.log("Worker application listening.....");
-    //while(true)
-       await fetchMetaData();
+    while (true) {
+        console.log("Updating database...")
+        await fetchMetaData();
+    }
 });

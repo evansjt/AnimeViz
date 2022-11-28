@@ -1,1 +1,0 @@
-SELECT DISTINCT lic_id, name FROM Licensor ORDER BY lower(name) ASC;

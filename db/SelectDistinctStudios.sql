@@ -1,1 +1,0 @@
-SELECT DISTINCT stud_id, name FROM Studio ORDER BY lower(name) ASC;

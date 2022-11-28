@@ -1,10 +1,24 @@
 import fs from 'fs';
 import express from 'express';
-import sqlite3 from 'sqlite3';
+import promise from 'bluebird';
+import pgPromise from 'pg-promise';
 
 export let avgMemPerYrRoute = express();
 
-var db = null;
+const options = {
+    promiseLib: promise
+};
+
+const pgp = new pgPromise(options);
+
+const connection = process.env.DATABASE_URI || {
+    host: 'localhost',
+    port: 5432,
+    database: 'animedb',
+    user: 'animedb',
+    password: 'animedb1234'
+};
+const db = pgp(connection);
 
 function readSqlDataToOutput(rows, dataOutput) {
     rows.forEach((row) => {
@@ -29,22 +43,17 @@ function querySqlData(callback, data) {
     return new Promise((resolve, reject) => {
         let sql = fs.readFileSync('./db/GetAverageMembershipPerYear.sql').toString().replace(/\n/g, " ");
 
-        db.serialize(() => {
-            db.all(sql, (err, rows) => {
-                if (err) reject(err);
-                resolve(callback(rows, data));
-            });
+        db.many(sql).then(rows => {
+            resolve(callback(rows, data));
         });
     });
 }
 
 function getData(data) {
     return new Promise((resolve, reject) => {
-        db = new sqlite3.Database('./db/AnimeDB.db');
         querySqlData(readSqlDataToOutput, data).then(results => {
             resolve(results);
         });
-        db.close();
     });
 }
 

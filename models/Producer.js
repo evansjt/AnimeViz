@@ -1,11 +1,17 @@
 export class Producer {
-    constructor(producer=producer, fk=fk) {
-        this.prod_id = producer['mal_id'];
-        this.mal_id = fk;
-        this.name = producer['name'];
+    constructor(producer = null, fk = null) {
+        if (producer && fk) {
+            this.prod_id = producer['mal_id'];
+            this.mal_id = fk;
+            this.name = producer['name'];
+        }
     }
 
     toString() {
-        return "Producer";
+        return "producers";
+    }
+
+    getSQLScript() {
+        return 'db/UpsertProducer.sql';
     }
 }
