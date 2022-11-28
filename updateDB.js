@@ -103,7 +103,7 @@ export async function fetchMetaData() {
     let numPages = response.pagination.last_visible_page;
 
     const db = pgp(connection);
-    (async () => {
+    await (async () => {
         let sum = [];
         for (let i = 1; i <= numPages; i++)
             sum.push(await fetchRetry(i).then(async resJSON => await updatePageInDB(db, resJSON)));
