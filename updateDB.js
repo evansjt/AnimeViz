@@ -105,8 +105,11 @@ export async function fetchMetaData() {
     const db = pgp(connection);
     await (async () => {
         let sum = [];
-        for (let i = 1; i <= numPages; i++)
-            sum.push(await fetchRetry(i).then(async resJSON => await updatePageInDB(db, resJSON)));
+        for (let i = 1; i <= numPages; i++) {
+            let pageSum = await fetchRetry(i).then(async resJSON => await updatePageInDB(db, resJSON));
+            console.log(`Page ${i} of '/anime': ${pageSum} records inserted/affected.`);
+            sum.push(pageSum);
+        }
         return sum.reduce((partialSum, a) => partialSum + a, 0);
     })().then(data => {
         db.none('VACUUM');
