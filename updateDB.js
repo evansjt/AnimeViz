@@ -104,10 +104,12 @@ export async function fetchMetaData() {
 
     const db = pgp(connection);
     await (async () => {
+        let localOrPublic = process.env.DATABASE_URI ? "public" : "local";
+        console.log(`Updating ${localOrPublic} database...`)
         let sum = [];
-        for (let i = 1; i <= numPages; i++) {
+        for (let i = numPages; i > 0; i--) {
             let pageSum = await fetchRetry(i).then(async resJSON => await updatePageInDB(db, resJSON));
-            console.log(`Page ${i} of '/anime': ${pageSum} records inserted/affected.`);
+            console.log(`Fetching page ${numPages-i+1}/${numPages} of '/anime': ${pageSum} records inserted/affected.`);
             sum.push(pageSum);
         }
         return sum.reduce((partialSum, a) => partialSum + a, 0);
