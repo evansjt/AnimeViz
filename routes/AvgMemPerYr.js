@@ -14,14 +14,12 @@ const pgp = new pgPromise(options);
 const connection = process.env.DATABASE_URI || {
     host: 'localhost',
     port: 5432,
-    database: 'animedb',
-    user: 'animedb',
-    password: 'animedb1234'
+    database: 'animedb'
 };
 const db = pgp(connection);
 
 function readSqlDataToOutput(rows, dataOutput) {
-    rows.forEach((row) => {
+    rows.forEach(row => {
         let year = row["Year"];
         let mediaType = row["Media Type"];
         let avgMembers = row["Average Members"];

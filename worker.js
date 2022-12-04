@@ -1,7 +1,7 @@
 import express from "express";
 import { fetchMetaData } from "./updateDB.js";
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 const app = express();
 

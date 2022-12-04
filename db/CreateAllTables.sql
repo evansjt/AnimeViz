@@ -1,5 +1,8 @@
 CREATE TABLE IF NOT EXISTS anime (
 	mal_id INTEGER NOT NULL UNIQUE,
+	url TEXT NOT NULL,
+	image_jpg TEXT,
+	image_webp TEXT,
 	title TEXT NOT NULL,
 	title_english	TEXT,
 	title_japanese TEXT,

@@ -1,6 +1,9 @@
 export class Anime{
     constructor(animeData) {
         this.mal_id = animeData['mal_id'];
+        this.url = animeData['url'];
+        this.image_jpg = animeData['images']['jpg']['image_url'];
+        this.image_webp = animeData['images']['webp']['image_url'];
         this.title = animeData['title'];
         this.title_english = animeData['title_english'];
         this.title_japanese = animeData['title_japanese'];
