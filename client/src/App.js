@@ -1,10 +1,14 @@
 import './App.css';
-import TemporalDataViz from './TemporalDataViz'
+import AvgMembersPerYear from './visualizations/AvgMembersPerYear'
+import QuarterlyMembersPerLast5Years from './visualizations/QuarterlyMembersPerLast5Years'
 
 function App() {
   return (
     <div className="App">
-      <TemporalDataViz />
+      <AvgMembersPerYear />
+      <div className='graph-container'>
+        <QuarterlyMembersPerLast5Years />
+      </div>
     </div>
   );
 }

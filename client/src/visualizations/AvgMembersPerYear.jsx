@@ -5,27 +5,8 @@ import axios from "axios";
 function AvgAnimeMembershipPerYear() {
 
     useEffect(() => {
-        var data = [];
-        function plotData(avgMemberData) {
-            for (let mediaType in avgMemberData) {
-                data.push({
-                    x: avgMemberData[mediaType]['Years'],
-                    y: avgMemberData[mediaType]['Average Members'],
-                    showlegend: true,
-                    name: mediaType === 'OVA' || mediaType === 'ONA' ? `${mediaType}*` : mediaType,
-                    type: 'scatter',
-                    fill: 'none',
-                    mode: 'lines+markers',
-                    line: {
-                        width: 3
-                    },
-                    hovertemplate: `<b>${mediaType} - %{x}</b><br><i>Avg. members</i>: %{y}<extra></extra>`
-                });
-            }
-        }
-
         const layout = {
-            title: 'Average Membership of Anime Media Released per Year',
+            title: '<b>Average Membership of Anime Media Released per Year</b><br><i style="font-size:12px">(Raw data can be seen with API extension: /avg-mem-per-yr)</i>',
             xaxis: {
                 title: 'Year'
             },
@@ -64,13 +45,25 @@ function AvgAnimeMembershipPerYear() {
         };
 
         axios.get("/avg-mem-per-yr", { crossdomain: true }).then(res => {
-            plotData(res.data);
-            Plotly.newPlot('temporal-data-viz', data, layout);
+            let data = Object.keys(res.data).map(mediaType => ({
+                x: res.data[mediaType]['Years'],
+                y: res.data[mediaType]['Average Members'],
+                showlegend: true,
+                name: mediaType === 'OVA' || mediaType === 'ONA' ? `${mediaType}*` : mediaType,
+                type: 'scatter',
+                fill: 'none',
+                mode: 'lines+markers',
+                line: {
+                    width: 3
+                },
+                hovertemplate: `<b>${mediaType} - %{x}</b><br><i>Avg. members</i>: %{y}<extra></extra>`
+            }));
+            Plotly.newPlot('avgmempyr-data-viz', data, layout);
         });
     }, []);
 
     return (
-        <div id="temporal-data-viz"></div>
+        <div id="avgmempyr-data-viz"></div>
     );
 }
 
