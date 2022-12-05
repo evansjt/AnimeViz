@@ -2,9 +2,10 @@ import express from "express";
 import path from 'path';
 import promise from 'bluebird';
 import pgPromise from 'pg-promise';
-import {fileURLToPath} from 'url';
-import { avgMemPerYrRoute } from './routes/AvgMemPerYr.js';
+import { fileURLToPath } from 'url';
+import { avgMemPerYrRoute } from './routes/AvgMembersPerYr.js';
 import { quarterlyMembersPerLast5YearsRoute } from './routes/QuarterlyMembersPerLast5Years.js';
+import { ageRatingDistOfBLGenreRoute } from './routes/AgeRatingDistOfBLGenre.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use("/avg-mem-per-yr", avgMemPerYrRoute);
 app.use("/qtly-mem-per-lst5yrs", quarterlyMembersPerLast5YearsRoute);
+app.use("/age-rating-dist-of-bl-genre", ageRatingDistOfBLGenreRoute);
 
 if (port == null || port == "")
     port = 8080;

@@ -37,16 +37,11 @@
   }
 }
 
-.js-plotly-plot {
+.graph-container>div {
   border: 1px solid black;
 }
 
 .graph-container {
   display: flex;
-}
-
-#qtlymemplst5yrs-data-viz {
-  flex: 1;
-  width: 500px;
-  height: 500px;
+  justify-content: space-evenly;
 }
