@@ -3,15 +3,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import createPlotlyComponent from 'react-plotly.js/factory';
+import './top-bl-anime.css';
+
 const Plot = createPlotlyComponent(Plotly);
 
-function AgeRatingDistOfBLGenre() {
+function AgeRatingCompOfBLGenre() {
     const [data, setData] = useState([]);
     const [layout, setLayout] = useState({});
     const [ratingInfo, setRatingInfo] = useState([]);
 
     useEffect(() => {
-        axios.get("/age-rating-dist-of-bl-genre", { crossdomain: true }).then(res => {
+        axios.get("/age-rating-comp-of-bl-genre", { crossdomain: true }).then(res => {
             setData([{
                 values: Object.keys(res.data).map(key => res.data[key].value),
                 labels: Object.keys(res.data),
@@ -33,7 +35,7 @@ function AgeRatingDistOfBLGenre() {
             });
             setLayout({
                 title: {
-                    text: '<b>Age Rating Distribution of Boys Love Titles</b><br><i style="font-size:12px">(Raw data can be seen with API extension: /age-rating-dist-of-bl-genre)</i>',
+                    text: '<b>Age Rating Composition of Boys Love Titles</b><br><i style="font-size:12px">(Raw data can be seen with API extension: /age-rating-comp-of-bl-genre)</i>',
                     y: 0.89
                 },
                 width: window.innerWidth/2,
@@ -66,10 +68,10 @@ function AgeRatingDistOfBLGenre() {
 
     return (
         <div>
-            <Plot id="ageratingdistbl-data-viz" data={data} layout={layout} onHover={hover} />
+            <Plot id="ageratingcompbl-data-viz" data={data} layout={layout} onHover={hover} />
             <div id="rating-data" style={{ border: '1px solid black', background: 'lightgrey' }}></div>
         </div>
     );
 }
 
-export default AgeRatingDistOfBLGenre;
+export default AgeRatingCompOfBLGenre;

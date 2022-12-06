@@ -7,7 +7,7 @@ GROUP BY rating, g.name
 HAVING g.name = 'Boys Love'
 )
 SELECT count AS "# BL Anime titles", rating AS "Rating", rank_within_rating AS "Rank", title AS "Title", url, image_jpg, image_webp
-FROM (SELECT r.priority, bl.rating, bl.count, a.mal_id, a.title, a.url, a.image_jpg, a.image_webp, RANK() OVER (PARTITION BY bl.rating ORDER BY a.popularity ASC) rank_within_rating
+FROM (SELECT r.priority, bl.rating, bl.count, a.mal_id, COALESCE(a.title_english,a.title) AS title, a.url, a.image_jpg, a.image_webp, RANK() OVER (PARTITION BY bl.rating ORDER BY a.popularity ASC) rank_within_rating
 FROM anime a
 LEFT JOIN genre g ON a.mal_id = g.mal_id
 LEFT JOIN numOfBLTitles bl ON COALESCE(a.rating, 'Unrated') = bl.rating AND g.name = bl.name

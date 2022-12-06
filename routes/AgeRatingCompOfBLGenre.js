@@ -2,7 +2,7 @@ import fs from 'fs';
 import express from 'express';
 import { db } from '../server.js';
 
-export let ageRatingDistOfBLGenreRoute = express();
+export let ageRatingCompOfBLGenreRoute = express();
 
 function readSqlDataToOutput(rows, dataOutput) {
     let unformattedOutput = [];
@@ -10,11 +10,10 @@ function readSqlDataToOutput(rows, dataOutput) {
         if (!returnValue[row['Rating']]) {
             returnValue[row['Rating']] = {
                 value: row['# BL Anime titles'],
-                topBLTitleImage: row['image_jpg'],
-                topTitlesInGenre: [{ rank: row['Rank'], url: row['url'], title: row['Title'] }]
+                topTitlesInGenre: [{ rank: row['Rank'], url: row['url'], jpg: row['image_jpg'], title: row['Title'] }]
             };
         } else {
-            returnValue[row['Rating']]['topTitlesInGenre'].push({ rank: row['Rank'], url: row['url'], title: row['Title'] });
+            returnValue[row['Rating']]['topTitlesInGenre'].push({ rank: row['Rank'], url: row['url'], jpg: row['image_jpg'], title: row['Title'] });
         }
         return returnValue;
     }, unformattedOutput);
@@ -22,9 +21,8 @@ function readSqlDataToOutput(rows, dataOutput) {
     Object.keys(unformattedOutput).reduce((returnValue, row) => {
         returnValue[row] = {
             value: unformattedOutput[row].value,
-            topBLTitleImage: unformattedOutput[row].topBLTitleImage,
             topTitlesInGenre: unformattedOutput[row].topTitlesInGenre,
-            text: `<div style="display:flex;justify-content:center;padding-bottom:15px;"><img src="${unformattedOutput[row].topBLTitleImage}" alt="#1 BL of Age Rating" style="height:196px;"><ul style="padding-left:10px;margin-top:0px;list-style:none;text-align:left;">${unformattedOutput[row].topTitlesInGenre.map(t => t.rank == 1 ? `<li><b>#${t.rank}: <a target="_blank" href="${t.url}">${t.title}</a></b></li>` : `<li>#${t.rank}: <a target="_blank" href="${t.url}">${t.title}</a></li>`).join('')}</ul></div>`
+            text: `<div id="topBLAnime"><img src="${unformattedOutput[row].topTitlesInGenre[0].jpg}"><ul id="bl-list">${unformattedOutput[row].topTitlesInGenre.map(t => `<li onmouseover="$('#topBLAnime img').attr('src','${t.jpg}');">${t.rank == 1 ? '<b>' : ''}#${t.rank}: <a target="_blank" href="${t.url}">${t.title}</a>${t.rank == 1 ? '</b>' : ''}</li>`).join('')}</ul></div>`
         }
         return returnValue;
     }, dataOutput);
@@ -49,6 +47,6 @@ function getData(data) {
     });
 }
 
-ageRatingDistOfBLGenreRoute.route("/").get((req, res) => {
+ageRatingCompOfBLGenreRoute.route("/").get((req, res) => {
     getData({}).then(results => res.send(results));
 });
