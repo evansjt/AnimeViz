@@ -107,7 +107,7 @@ export async function fetchMetaData() {
         let sum = [];
         for (let i = numPages; i > 0; i--) {
             let pageSum = await fetchRetry(i).then(async resJSON => await updatePageInDB(db, resJSON));
-            console.log(`Fetching page ${numPages-i+1}/${numPages} of '/anime': ${pageSum} records inserted/affected.`);
+            console.log(`Fetching page ${numPages-i+1}/${numPages} (${Math.round(((numPages-i+1)/numPages)*10000)/100}%) of '/anime': ${pageSum} records inserted/affected.`);
             sum.push(pageSum);
         }
         return sum.reduce((partialSum, a) => partialSum + a, 0);
