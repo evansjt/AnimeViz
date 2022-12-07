@@ -1,93 +1,100 @@
 /* eslint-disable no-undef */
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import cytoscape from 'cytoscape';
 import popper from 'cytoscape-popper';
 import tippy from 'tippy.js';
 
 cytoscape.use(popper);
 
+const stylesheet = [
+    {
+        selector: 'node', style: {
+            label: "data(label)", 'background-color': 'black',
+            'font-size': "data(fontSize)",
+            'text-halign': 'center', 'text-valign': 'center', 'text-outline-color': 'white',
+            'text-outline-width': "data(outlineWidth)",
+            width: "data(radius)", height: "data(radius)"
+        }
+    },
+    { selector: 'edge', style: { width: "data(width)" } },
+    { selector: 'core', style: { 'active-bg-size': 0 } }
+];
+
 function CollaboratingProducers() {
+    const [n, setN] = useState(10);
+    const [value, setValue] = useState(n);
+    const [maxRange, setMaxRange] = useState(n);
+    const [resetView, setResetView] = useState(() => { });
 
     useEffect(() => {
-        let nodes = [
-            { data: { id: '1', degree: 7, radius: 7 * 5, label: 'Node 1', text: "Total collabs: 7" } },
-            { data: { id: '2', degree: 2, radius: 2 * 5, label: 'Node 2', text: "Total collabs: 2" } },
-            { data: { id: '3', degree: 5, radius: 5 * 5, label: 'Node 3', text: "Total collabs: 5" } }
-        ];
-        let edges = [
-            { data: { id: '1_2', source: '1', target: '2', weight: 2, text: 'had 2 collabs. with' } },
-            { data: { id: '1_3', source: '1', target: '3', weight: 5, text: 'had 5 collabs. with' } }
-        ];
-        let stylesheet = [
-            {
-                selector: 'node',
-                style: {
-                    label: "data(label)",
-                    'background-color': 'black',
-                    width: "data(radius)",
-                    height: "data(radius)",
-                }
-            },
-            {
-                selector: 'edge',
-                style: {
-                    width: "data(weight)"
-                }
+        axios.get(`/collab-prods/${n}`, { crossdomain: true }).then(res => {
+            const elements = res.data.elements;
+            setMaxRange(res.data.maxRange);
+
+            drawNetworkGraph(elements);
+
+            function drawNetworkGraph(elements) {
+                const cy = cytoscape({
+                    container: document.getElementById("networkGraph"),
+                    style: stylesheet,
+                    elements: elements,
+                    layout: { name: 'concentric' },
+                    wheelSensitivity: 0.05
+                });
+
+                const makePopper = ele => {
+                    let ref = ele.popperRef();
+                    ele.tippy = tippy(document.createElement('div'), {
+                        getReferenceClientRect: ref.getBoundingClientRect,
+                        trigger: 'manual',
+                        content: () => {
+                            let div = document.createElement('div');
+                            div.innerHTML = ele.data().text;
+                            return div;
+                        },
+                        arrow: true,
+                        placement: 'bottom',
+                        hideOnClick: true,
+                        sticky: "reference",
+                        interactive: true,
+                        appendTo: document.body // or append dummyDomEle to document.body
+                    });
+                };
+
+                cy.ready(() => {
+                    cy.elements().forEach(ele => {
+                        makePopper(ele);
+                    });
+                });
+
+                cy.elements().unbind('mouseover');
+                cy.elements().bind('mouseover', (event) => event.target.tippy.show());
+
+                cy.elements().unbind('mouseout');
+                cy.elements().bind('mouseout', (event) => event.target.tippy.hide());
+
+                const resetView = () => {
+                    cy.fit();
+                };
+                setResetView(() => resetView);
             }
-        ];
-
-        const cy = cytoscape({
-            container: document.getElementById("networkGraph"),
-            style: stylesheet,
-            elements: {
-                nodes: nodes,
-                edges: edges
-            },
-            layout: { name: 'random' },
-            wheelSensitivity: 0.05
         });
-
-        cy.ready(() => {
-            cy.elements().forEach(ele => {
-                makePopper(ele);
-            });
-        });
-
-        cy.elements().unbind('mouseover');
-        cy.elements().bind('mouseover', (event) => event.target.tippy.show());
-
-        cy.elements().unbind('mouseout');
-        cy.elements().bind('mouseout', (event) => event.target.tippy.hide());
-
-        cy.elements().unbind('drag');
-        cy.elements().bind('drag', (event) => event.target.tippy.hide());
-    }, []);
-
-    const makePopper = ele => {
-        let ref = ele.popperRef();
-        ele.tippy = tippy(document.createElement('div'), {
-            getReferenceClientRect: ref.getBoundingClientRect,
-            trigger: 'manual',
-            content: function () {
-                let div = document.createElement('div');
-                div.innerHTML = ele.data().text;
-                return div;
-            },
-            arrow: true,
-            placement: 'bottom',
-            hideOnClick: false,
-            sticky: "reference",
-            interactive: true,
-            appendTo: document.body // or append dummyDomEle to document.body
-        });
-    };
+    }, [n]);
 
     return (
         <div style={{ textAlign: 'left' }}>
             <div style={{ textAlign: 'center' }}>
                 <h3 style={{ marginBottom: 0 }}>Frequencies of Collaborations between Anime Producers</h3>
-                <i style={{ fontSize: '12px' }}>(Raw data can be seen with API extension: /collab-prods)</i>
+                <i style={{ fontSize: '12px' }}>(Raw data can be seen with API extension: /collab-prods/:n)</i>
+                <div style={{ backgroundColor: 'black', color: 'white', width: 'fit-content', margin: 'auto', padding: 15 }}>
+                    <label>Top {n} Producers with the Most Collaborations (1-{maxRange}):</label>
+                    <input type="number" min="2" max={maxRange} value={value} onChange={e => setValue(e.target.value)} />
+                    <div>
+                        <button onClick={e => setN(value)}>Generate!</button>
+                        <button onClick={resetView}>Reset View</button>
+                    </div>
+                </div>
             </div>
             <div id="networkGraph" style={{ height: '500px', width: window.innerWidth, backgroundColor: 'lightgrey' }}></div>
         </div>
