@@ -6,10 +6,10 @@ import createPlotlyComponent from 'react-plotly.js/factory';
 import './top-bl-anime.css';
 
 const Plot = createPlotlyComponent(Plotly);
+const layout = { title: { text: '<b>Age Rating Composition of Boys Love Titles</b><br><i style="font-size:12px">(Raw data can be seen with API extension: /age-rating-comp-of-bl-genre)</i>', y: 0.89 }, width: window.innerWidth / 2, margin: { t: 130, b: 0 }, legend: { title: { text: "<b>Age Rating<b>", font: { size: 14 }, side: "top" }, bgcolor: '#E2E2E2', bordercolor: '#FFFFFF', borderwidth: 2 } };
 
 function AgeRatingCompOfBLGenre() {
     const [data, setData] = useState([]);
-    const [layout, setLayout] = useState({});
     const [ratingInfo, setRatingInfo] = useState([]);
 
     useEffect(() => {
@@ -32,29 +32,6 @@ function AgeRatingCompOfBLGenre() {
                 });
                 document.getElementById('rating-data').innerHTML = `<h3>Top Ten BL Anime Titles with a "${max.rating}" rating</h3>${max.text}`;
                 return tmp;
-            });
-            setLayout({
-                title: {
-                    text: '<b>Age Rating Composition of Boys Love Titles</b><br><i style="font-size:12px">(Raw data can be seen with API extension: /age-rating-comp-of-bl-genre)</i>',
-                    y: 0.89
-                },
-                width: window.innerWidth/2,
-                margin: {
-                    t: 130,
-                    b: 0
-                },
-                legend: {
-                    title: {
-                        text: "<b>Age Rating<b>",
-                        font: {
-                            size: 14
-                        },
-                        side: "top"
-                    },
-                    bgcolor: '#E2E2E2',
-                    bordercolor: '#FFFFFF',
-                    borderwidth: 2
-                }
             });
         });
     }, []);

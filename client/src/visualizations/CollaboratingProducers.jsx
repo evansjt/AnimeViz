@@ -7,19 +7,7 @@ import tippy from 'tippy.js';
 
 cytoscape.use(popper);
 
-const stylesheet = [
-    {
-        selector: 'node', style: {
-            label: "data(label)", 'background-color': 'black',
-            'font-size': "data(fontSize)",
-            'text-halign': 'center', 'text-valign': 'center', 'text-outline-color': 'white',
-            'text-outline-width': "data(outlineWidth)",
-            width: "data(radius)", height: "data(radius)"
-        }
-    },
-    { selector: 'edge', style: { width: "data(width)" } },
-    { selector: 'core', style: { 'active-bg-size': 0 } }
-];
+const stylesheet = [{ selector: 'node', style: { label: "data(label)", 'background-color': 'black', 'font-size': "data(fontSize)", 'text-halign': 'center', 'text-valign': 'center', 'text-outline-color': 'white', 'text-outline-width': "data(outlineWidth)", width: "data(radius)", height: "data(radius)" } }, { selector: 'edge', style: { width: "data(width)" } }, { selector: 'core', style: { 'active-bg-size': 0 } }];
 
 function CollaboratingProducers() {
     const [n, setN] = useState(10);
