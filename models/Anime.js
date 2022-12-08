@@ -1,4 +1,4 @@
-export class Anime{
+export class Anime {
     constructor(animeData) {
         this.mal_id = animeData['mal_id'];
         this.url = animeData['url'];
@@ -23,7 +23,13 @@ export class Anime{
         this.favorites = animeData['favorites'];
         this.season = animeData['season'];
         this.year = animeData['year'];
-        this.broadcast_day = animeData['broadcast']['day'];
-        this.broadcast_time = animeData['broadcast']['time'];
+        this.broadcast_info = this.parseBroadcastInfo(animeData['broadcast']);
+    }
+
+    parseBroadcastInfo(broadcastInfo) {
+        const dow = { Mondays: 1, Tuesdays: 2, Wednesdays: 3, Thursdays: 4, Fridays: 5, Saturdays: 6, Sundays: 7 };
+        if (broadcastInfo['day'] && broadcastInfo['time'])
+            return `12/${dow[broadcastInfo['day']]}/1969 ${broadcastInfo['time']}+09:00`;
+        return null;
     }
 }
