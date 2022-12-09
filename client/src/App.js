@@ -5,6 +5,7 @@ import AgeRatingCompOfBLGenre from './visualizations/AgeRatingCompOfBLGenre';
 import CollaboratingProducers from './visualizations/CollaboratingProducers';
 import DailyModeBroadcastTimesPerAge from './visualizations/DailyModeBroadcastTimesPerAgeRating';
 import DemographicsOfBLandGLTitles from './visualizations/DemographicsOfBLandGLTitles';
+import CollaboratingLicensorsAndStudios from './visualizations/CollaboratingLicensorsAndStudios';
 
 function App() {
   return (
@@ -13,20 +14,20 @@ function App() {
         <AvgMembersPerYear />
       </div>
       <div className='graph-container'>
-        <QuarterlyMembersPerLast5Years />
         <AgeRatingCompOfBLGenre />
+        <QuarterlyMembersPerLast5Years />
       </div>
       <div className='graph-container'>
         <CollaboratingProducers />
       </div>
       <div className='graph-container'>
         <DailyModeBroadcastTimesPerAge />
-        <div style={{ width: window.innerWidth / 2 }}>
-          <DemographicsOfBLandGLTitles style={{ height: '50%' }} />
-          <div style={{ height: '50%', backgroundColor: 'black' }}></div>
-        </div>
+        <DemographicsOfBLandGLTitles />
       </div>
-    </div>
+      <div className='graph-container'>
+        <CollaboratingLicensorsAndStudios />
+      </div>
+    </div >
   );
 }
 

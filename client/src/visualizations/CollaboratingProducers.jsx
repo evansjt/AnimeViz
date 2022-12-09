@@ -76,15 +76,18 @@ function CollaboratingProducers() {
                 <h3 style={{ marginBottom: 0 }}>Frequencies of Collaborations between Anime Producers</h3>
                 <i style={{ fontSize: '12px' }}>(Raw data can be seen with API extension: /collab-prods/:n)</i>
                 <div style={{ backgroundColor: 'black', color: 'white', width: 'fit-content', margin: 'auto', padding: 15 }}>
-                    <label>Top {n} Producers with the Most Collaborations (1-{maxRange}):</label>
-                    <input type="number" min="2" max={maxRange} value={value} onChange={e => setValue(e.target.value)} />
+                    <label>Top {n} Producers with the Most Collaborations (2-{maxRange}):</label>
+                    <input type="number" min={2} max={maxRange} value={value} onChange={e => {
+                        const val = e.target.value;
+                        if (val > 1 && val <= maxRange) setValue(val);
+                    }} />
                     <div>
                         <button onClick={e => setN(value)}>Generate!</button>
                         <button onClick={resetView}>Reset View</button>
                     </div>
                 </div>
             </div>
-            <div id="networkGraph" style={{ height: '500px', width: window.innerWidth, backgroundColor: 'lightgrey' }}></div>
+            <div id="networkGraph" style={{ height: '500px', width: '100%', backgroundColor: 'lightgrey' }}></div>
         </div>
     );
 

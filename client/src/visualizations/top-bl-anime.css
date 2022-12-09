@@ -10,6 +10,10 @@
     text-align: left;
 }
 
+#bl-list>li:first-of-type {
+    font-weight: bold;
+}
+
 #topBLAnime {
     display: flex;
     justify-content: center;

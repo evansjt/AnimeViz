@@ -9,6 +9,7 @@ import { ageRatingCompOfBLGenreRoute } from './routes/AgeRatingCompOfBLGenre.js'
 import { collaboratingProducersRoute } from "./routes/CollaboratingProducers.js";
 import { dailyModeBroadcastTimesPerAgeRatingRoute } from "./routes/DailyModeBroadcastTimesPerAgeRating.js";
 import { demographicsOfBLandGLTitlesRoute } from "./routes/DemographicsOfBLandGLTitles.js";
+import { collaboratingLicensorsAndStudiosRoute } from "./routes/CollaboratingLicensorsAndStudios.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,6 +39,7 @@ app.use("/age-rating-comp-of-bl-genre", ageRatingCompOfBLGenreRoute);
 app.use("/collab-prods", collaboratingProducersRoute);
 app.use("/daily-mode-bc-times-per-rating", dailyModeBroadcastTimesPerAgeRatingRoute);
 app.use("/demographics-of-bl-gl-titles", demographicsOfBLandGLTitlesRoute);
+app.use("/collab-lics-studs", collaboratingLicensorsAndStudiosRoute);
 
 if (port == null || port == "")
     port = 8080;

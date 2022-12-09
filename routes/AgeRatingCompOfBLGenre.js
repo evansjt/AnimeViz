@@ -22,7 +22,7 @@ function readSqlDataToOutput(rows, dataOutput) {
         returnValue[row] = {
             value: unformattedOutput[row].value,
             topTitlesInGenre: unformattedOutput[row].topTitlesInGenre,
-            text: `<div id="topBLAnime"><img src="${unformattedOutput[row].topTitlesInGenre[0].jpg}"><ul id="bl-list">${unformattedOutput[row].topTitlesInGenre.map(t => `<li onmouseover="$('#topBLAnime img').attr('src','${t.jpg}');">${t.rank == 1 ? '<b>' : ''}#${t.rank}: <a target="_blank" href="${t.url}">${t.title}</a>${t.rank == 1 ? '</b>' : ''}</li>`).join('')}</ul></div>`
+            text: `<div id="topBLAnime"><img src="${unformattedOutput[row].topTitlesInGenre[0].jpg}"><ul id="bl-list">${unformattedOutput[row].topTitlesInGenre.map(t => `<li onmouseover="$('#topBLAnime img').attr('src','${t.jpg}');">#${t.rank}: <a target="_blank" href="${t.url}">${t.title}</a></li>`).join('')}</ul></div>`
         }
         return returnValue;
     }, dataOutput);
