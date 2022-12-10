@@ -1,6 +1,8 @@
 #rating-data {
     border: 1px solid black;
     background: lightgrey;
+    width: 600px;
+    margin: auto;
 }
 
 #bl-list {

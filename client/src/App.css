@@ -37,12 +37,19 @@
   }
 }
 
-.graph-container>div {
-  border: 1px solid black;
-  width: 100%;
-}
-
 .graph-container {
   display: flex;
   justify-content: space-evenly;
+}
+
+.graph-container>div {
+  border: 1px solid black;
+}
+
+.graph-container>div:only-child, .graph-container.two-graph .dataplot  {
+  width: 100%;
+}
+
+.graph-container.two-graph>div, .graph-container.two-graph>.dataplot {
+  width: 50%;
 }

@@ -87,7 +87,7 @@ function CollaboratingProducers() {
                     </div>
                 </div>
             </div>
-            <div id="networkGraph" style={{ height: '500px', width: '100%', backgroundColor: 'lightgrey' }}></div>
+            <div id="networkGraph" className="dataplot" style={{ height: '500px', backgroundColor: 'lightgrey' }}></div>
         </div>
     );
 

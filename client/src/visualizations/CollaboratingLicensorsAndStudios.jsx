@@ -23,7 +23,7 @@ function CollaboratingLicensorsAndStudios() {
     }, []);
 
     return (
-        <Plot id="collablicsprod-data-viz" data={data} layout={layout} />
+        <Plot id="collablicsprod-data-viz" className="dataplot" data={data} layout={layout} />
     );
 }
 

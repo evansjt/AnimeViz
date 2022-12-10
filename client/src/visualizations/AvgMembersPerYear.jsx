@@ -27,7 +27,7 @@ function AvgAnimeMembershipPerYear() {
     }, [])
 
     return (
-        <Plot id="avgmempyr-data-viz" data={data} layout={layout} />
+        <Plot id="avgmempyr-data-viz" className="dataplot" data={data} layout={layout} />
     );
 }
 

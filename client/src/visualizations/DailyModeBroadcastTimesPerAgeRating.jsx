@@ -9,7 +9,7 @@ const tzNames = moment.tz.names();
 
 const polarLayout = { angularaxis: { direction: 'clockwise', rotation: 64.2857142857 }, radialaxis: { type: 'date', tickformat: '%I:%M %p', fixedrange: true, showgrid: false, range: ["Jan 01, 1970 00:00:00", "Jan 01, 1970 23:59:59"] } };
 
-const layoutJP = { title: { text: `<b>Asia/Tokyo (${moment.tz.zone('Asia/Tokyo').abbr(new Date())}) [Local Broadcast Time]</b>`, font: { size: 14 } }, width: '50%', polar: polarLayout, legend: { title: { text: "<b>Age Rating<b>", font: { size: 14 }, side: "top" }, margin: { b: 0, t: 0, l: 0, r: 0 }, bgcolor: '#E2E2E2', bordercolor: '#FFFFFF', borderwidth: 2 } };
+const layoutJP = { title: { text: `<b>Asia/Tokyo (${moment.tz.zone('Asia/Tokyo').abbr(new Date())}) [Local Broadcast Time]</b>`, font: { size: 14 } }, polar: polarLayout, legend: { title: { text: "<b>Age Rating<b>", font: { size: 14 }, side: "top" }, margin: { b: 0, t: 0, l: 0, r: 0 }, bgcolor: '#E2E2E2', bordercolor: '#FFFFFF', borderwidth: 2 } };
 
 function DailyModeBroadcastTimesPerAgeRating() {
     const [dataJST, setJSTData] = useState([]);
@@ -52,9 +52,9 @@ function DailyModeBroadcastTimesPerAgeRating() {
                 <i style={{ fontSize: '12px' }}>(Raw data can be seen with API extension: /daily-mode-bc-times-per-rating/:TZ)<br />[:TZ is 'UTC' by default]</i>
             </div>
             <div>
-                <Plot id="dailymodebctimes-jst-data-viz" data={dataJST} layout={layoutJP} />
+                <Plot id="dailymodebctimes-jst-data-viz" className="dataplot" data={dataJST} layout={layoutJP} />
                 <div style={{ 'text-align': 'left' }}>
-                    <label for="timezone">Enter Timezone:</label>
+                    <label for="timezone">See broadcast times in another timezone:</label>
                     <input id="timezone" list={"timezone-list"}
                         onInput={e => {
                             const val = e.target.value;
@@ -70,7 +70,7 @@ function DailyModeBroadcastTimesPerAgeRating() {
                         })}
                     </datalist>
                 </div>
-                <Plot id="dailymodebctimes-pst-data-viz" data={dataOtherTZ} layout={layoutOtherTZ} />
+                <Plot id="dailymodebctimes-pst-data-viz" className="dataplot" data={dataOtherTZ} layout={layoutOtherTZ} />
             </div>
         </div>
     );

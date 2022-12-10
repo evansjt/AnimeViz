@@ -13,14 +13,14 @@ function App() {
       <div className='graph-container'>
         <AvgMembersPerYear />
       </div>
-      <div className='graph-container'>
-        <AgeRatingCompOfBLGenre />
+      <div className='graph-container two-graph' style={{minHeight: 750}}>
         <QuarterlyMembersPerLast5Years />
+        <AgeRatingCompOfBLGenre />
       </div>
       <div className='graph-container'>
         <CollaboratingProducers />
       </div>
-      <div className='graph-container'>
+      <div className='graph-container two-graph' style={{minHeight: 1030}}>
         <DailyModeBroadcastTimesPerAge />
         <DemographicsOfBLandGLTitles />
       </div>
