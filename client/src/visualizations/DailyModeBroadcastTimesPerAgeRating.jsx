@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import axios from "axios";
 import { useState, useEffect } from "react";
 import createPlotlyComponent from 'react-plotly.js/factory';
 import moment from 'moment-timezone';

@@ -26,7 +26,7 @@ function querySqlData(callback, data) {
         let sqlFilename = './db/GetBLAndGLDemographic.sql';
         let sql = fs.readFileSync(sqlFilename).toString().replace(/\n/g, " ");
 
-        db.many(sql, [data.tz]).then(rows => {
+        db.many(sql).then(rows => {
             resolve(callback(rows, data));
         }).catch(() => {
             resolve({});

@@ -1,11 +1,5 @@
 /* eslint-disable no-undef */
-import axios from "axios";
 import { useEffect, useState } from "react";
-import cytoscape from 'cytoscape';
-import popper from 'cytoscape-popper';
-import tippy from 'tippy.js';
-
-cytoscape.use(popper);
 
 const stylesheet = [{ selector: 'node', style: { label: "data(label)", 'background-color': 'black', 'font-size': "data(fontSize)", 'text-halign': 'center', 'text-valign': 'center', 'text-outline-color': 'white', 'text-outline-width': "data(outlineWidth)", width: "data(radius)", height: "data(radius)" } }, { selector: 'edge', style: { width: "data(width)" } }, { selector: 'core', style: { 'active-bg-size': 0 } }];
 
@@ -31,36 +25,34 @@ function CollaboratingProducers() {
                     wheelSensitivity: 0.05
                 });
 
-                const makePopper = ele => {
+                const makePopperWithTippy = ele => {
                     let ref = ele.popperRef();
                     ele.tippy = tippy(document.createElement('div'), {
-                        getReferenceClientRect: ref.getBoundingClientRect,
-                        trigger: 'manual',
-                        content: () => {
-                            let div = document.createElement('div');
-                            div.innerHTML = ele.data().text;
-                            return div;
+                        lazy: false,
+                        followCursor: 'true',
+                        hideOnClick: false,
+                        flipOnUpdate: true,
+                        onShow(instance) {
+                            instance.popperInstance.reference = ref
                         },
-                        arrow: true,
-                        placement: 'bottom',
-                        hideOnClick: true,
-                        sticky: "reference",
-                        interactive: true,
-                        appendTo: document.body // or append dummyDomEle to document.body
                     });
+                    ele.tippy.setContent(ele.data().text);
                 };
 
                 cy.ready(() => {
                     cy.elements().forEach(ele => {
-                        makePopper(ele);
+                        makePopperWithTippy(ele);
                     });
                 });
 
                 cy.elements().unbind('mouseover');
-                cy.elements().bind('mouseover', (event) => event.target.tippy.show());
+                cy.elements().bind('mouseover', event => event.target.tippy.show());
 
                 cy.elements().unbind('mouseout');
-                cy.elements().bind('mouseout', (event) => event.target.tippy.hide());
+                cy.elements().bind('mouseout', event => event.target.tippy.hide());
+
+                cy.elements().unbind('drag');
+                cy.elements().bind('drag', event => event.target.tippy.popperInstance.update());
 
                 const resetView = () => {
                     cy.fit();

@@ -29,6 +29,8 @@ function querySqlData(callback, data) {
 
         db.many(sql).then(rows => {
             resolve(callback(rows, data));
+        }).catch(() => {
+            resolve({});
         });
     });
 }
