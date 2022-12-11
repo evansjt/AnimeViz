@@ -82,10 +82,12 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     - Express Route: [DailyModeBroadcastTimesPerAgeRating.js](https://github.com/evansjt/AnimeViz/blob/main/routes/DailyModeBroadcastTimesPerAgeRating.js)<br />*(Route address: [/daily-mode-bc-times-per-rating/**:TZ**](https://anime-dataviz.onrender.com/daily-mode-bc-times-per-rating/JST)* [where **:TZ** = any supported timezone abbreviation (e.g. JST, PST, EST, etc.)]*)*
     - Database Query: [GetDailyModeBroadcastTimesPerAgeRating.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetDailyModeBroadcastTimesPerAgeRating.sql)
 - ### *What is the demographic breakdown among Boys Love and Girls Love titles?*
+  >\***Boys Love* = *Japanese fictional media that features romantic/homoerotic relationships between male characters*<br />
+  >\***Girls Love* = *Japanese fictional media that features romantic/homoerotic relationships between female characters*<br />
   >\**Seinen = general youth audience*, \**Shoujo = young female audience*<br />
   >\**Shounen = young male audience*, \**Josei = older female audience*<br />
   ><p align="center"><img alt="demographic_comp_bl_gl_titles" src="https://user-images.githubusercontent.com/32036244/206892876-84a8877c-3081-4092-8a9f-03b79794f4e0.png" height="500px" /></p>
-  - This bar chart (*created by [React Plotly](https://reactjs.org/)*) shows the comparison between the percentages of all Boys Love titles and Girls Love titles that are catered to certain demographic groups (Seinen*, Shoujo*, Shounen*, Josei*, Kids, or no specific demographic).
+  - This bar chart (*created by [React Plotly](https://reactjs.org/)*) shows the comparison between the percentages of all Boys Love** titles and Girls Love** titles that are catered to certain demographic groups (Seinen*, Shoujo*, Shounen*, Josei*, Kids, or no specific demographic).
     - React Visualization: [DemographicsOfBLandGLTitles.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/DemographicsOfBLandGLTitles.jsx)
     - Express Route: [DemographicsOfBLandGLTitles.js](https://github.com/evansjt/AnimeViz/blob/main/routes/DemographicsOfBLandGLTitles.js) *(Route address: [/demographics-of-bl-gl-titles](https://anime-dataviz.onrender.com/demographics-of-bl-gl-titles))*
     - Database Query: [GetBLAndGLDemographic.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetBLAndGLDemographic.sql)
