@@ -6,7 +6,7 @@ const stylesheet = [{ selector: 'node', style: { label: "data(label)", 'backgrou
 function CollaboratingProducers() {
     const [n, setN] = useState(10);
     const [value, setValue] = useState(n);
-    const [maxRange, setMaxRange] = useState(n);
+    const [maxRange, setMaxRange] = useState(0);
     const [resetView, setResetView] = useState(() => { });
 
     useEffect(() => {
@@ -63,12 +63,12 @@ function CollaboratingProducers() {
     }, [n]);
 
     return (
-        <div style={{ textAlign: 'left' }}>
+        <div style={{ backgroundColor: '#6f6f6f', color: 'white', textAlign: 'left' }}>
             <div style={{ textAlign: 'center' }}>
-                <h3 style={{ marginBottom: 0 }}>Frequencies of Collaborations between Anime Producers</h3>
-                <i style={{ fontSize: '12px' }}>(Raw data can be seen with API extension: /collab-prods/:n)</i>
-                <div style={{ backgroundColor: 'black', color: 'white', width: 'fit-content', margin: 'auto', padding: 15 }}>
-                    <label>Top {n} Producers with the Most Collaborations (2-{maxRange}):</label>
+                <h2 style={{ marginBottom: 0 }}>Frequencies of Collaborations between Anime Producers</h2>
+                <i style={{ fontSize: '14px' }}>(Raw data can be seen with API extension: /collab-prods/:n)<br />[:n is '{maxRange}' by default]</i>
+                <div style={{ width: 'fit-content', margin: 'auto', padding: 15 }}>
+                    <label style={{ color: '#EFEFEF' }}>Top {n} Producers with the Most Collaborations (2-{maxRange}):</label>
                     <input type="number" min={2} max={maxRange} value={value} onChange={e => {
                         const val = e.target.value;
                         if (val > 1 && val <= maxRange) setValue(val);
@@ -79,7 +79,7 @@ function CollaboratingProducers() {
                     </div>
                 </div>
             </div>
-            <div id="networkGraph" className="dataplot" style={{ height: '500px', backgroundColor: 'lightgrey' }}></div>
+            <div id="networkGraph" className="dataplot" style={{ height: '500px', backgroundColor: 'lightgray' }}></div>
         </div>
     );
 

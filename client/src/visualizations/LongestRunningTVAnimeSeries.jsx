@@ -6,7 +6,7 @@ import createPlotlyComponent from 'react-plotly.js/factory';
 ReactFC.fcRoot(FusionCharts);
 const Plot = createPlotlyComponent(Plotly);
 
-const layout = { title: { text: '<b>Top 50 Longest Running Anime TV Series</b><br><i style="font-size:12px">(Raw data can be seen with API extension: /longest-running-tv-anime-series)</i>' }, barmode: 'group', yaxis: { autorange: "reversed" }, legend: { x: 1, xanchor: 'right', y: 0, bgcolor: '#E2E2E2', bordercolor: '#FFFFFF', borderwidth: 2 }, margin: { t: 150, b: 25, l: 350 } };
+const layout = { title: { text: '<b>Top 50 Longest Running Anime TV Series</b><br><i style="font-size:12px">(Raw data can be seen with API extension: /longest-running-tv-anime-series)</i>', font: { size: 18 } }, barmode: 'group', yaxis: { autorange: "reversed" }, legend: { x: 0.95, xanchor: 'right', y: 0.95, bgcolor: '#E2E2E2', bordercolor: '#FFFFFF', borderwidth: 2 }, margin: { t: 100, b: 25, l: 300, r: 25 } };
 
 const staticGanttDataSource = {
     chart: { dateformat: "mm/dd/yyyy", theme: "fusion", canvasborderalpha: "40", useVerticalScrolling: "1", GanttWidthPercent: "80", ganttlinealpha: "50", ganttPaneDuration: "10", ganttPaneDurationUnit: "y", scrollToDate: new Date().toLocaleString() },
@@ -24,30 +24,42 @@ function LongestRunningTVAnimeSeries() {
         let dataSource = JSON.parse(JSON.stringify(staticGanttDataSource));
 
         axios.get(`/longest-running-tv-anime-series`, { crossdomain: true }).then(res => {
-            dataSource.processes.process = res.data.ranks;
-            dataSource.tasks.task = res.data.airespans.map(t => ({ label: `Aired for ${t.daysAired} days`, start: t.airedFrom, end: t.airedTo }));
-            dataSource.datatable.datacolumn[0].text = res.data.animeTitles.map(a => ({ label: a }));;
-            dataSource.datatable.datacolumn[1].text = res.data.episodesAired.map(e => ({ label: `${e}` }));
+            dataSource.processes.process = res.data.animeTitles.map(({ rank }) => ({ label: rank }));
+            dataSource.tasks.task = res.data.animeTitles.map(({ airespan }) => ({ label: `Aired for ${airespan.daysAired} days`, start: airespan.airedFrom, end: airespan.airedTo }));
+            dataSource.datatable.datacolumn[0].text = res.data.animeTitles.map(({ title }) => ({ label: title }));;
+            dataSource.datatable.datacolumn[1].text = res.data.animeTitles.map(({ episodesAired }) => ({ label: `${episodesAired}` }));
             dataSource.categories = res.data.categories;
 
             setGanttDataSource(dataSource);
 
-            const y = res.data.animeTitles.map((a, i) => `${res.data.ranks[i].label}: ${a}`);
+            const aireDaysX = res.data.animeTitles.map(({ airespan }) => airespan.daysAired);
+            const episodesX = res.data.animeTitles.map(({ episodesAired }) => episodesAired);
+            const y = res.data.animeTitles.map((a, i) => `${a.rank}: ${a.title}`);
 
             let barData = [{
-                x: res.data.airespans.map(({ daysAired }) => daysAired),
+                x: aireDaysX,
                 y: y,
                 type: 'bar',
                 orientation: 'h',
                 name: '# days aired',
-                hovertemplate: "<b>%{x} days</b> "
+                hovertemplate: "<b>%{x} days</b> ",
+                transforms: [{
+                    type: 'sort',
+                    target: 'x',
+                    order: 'descending'
+                }]
             }, {
-                x: res.data.episodesAired,
+                x: episodesX,
                 y: y,
                 type: 'bar',
                 orientation: 'h',
                 name: '# episodes aired',
-                hovertemplate: "<b>%{x} episodes</b>"
+                hovertemplate: "<b>%{x} episodes</b>",
+                transforms: [{
+                    type: 'sort',
+                    target: 'x',
+                    order: 'descending'
+                }]
             }]
 
             setBarData(barData);

@@ -5,10 +5,7 @@ import { db } from '../server.js';
 export let longestRunningTVAnimeSeriesRoute = express();
 
 function readSqlDataToOutput(rows, dataOutput) {
-    const ranks = rows.map(r => ({ label: `#${r.rank}` }));
-    const animeTitles = rows.map(r => r.Title);
-    const episodesAired = rows.map(r => r['# Episodes']);
-    const airespans = rows.map(r => ({ daysAired: r['Time Aired'], airedFrom: new Date(r['Aired From']).toLocaleDateString(), airedTo: new Date(r['Aired To']).toLocaleDateString() }));
+    const animeTitles = rows.map(r => ({ title: r.Title, rank: `#${r.rank}`, episodesAired: r['# Episodes'], airespan: { daysAired: r['Time Aired'], airedFrom: new Date(r['Aired From']).toLocaleDateString(), airedTo: new Date(r['Aired To']).toLocaleDateString() } }));
 
     const minYear = rows.reduce((min, { 'Aired From': y }) => min === null || new Date(y).getFullYear() < min ? new Date(y).getFullYear() : min, null);
     const maxYear = rows.reduce((max, { 'Aired To': y }) => max === null || new Date(y).getFullYear() > max ? new Date(y).getFullYear() : max, null);
@@ -23,7 +20,7 @@ function readSqlDataToOutput(rows, dataOutput) {
         yearQuarters.push({ start: `10/1/${i}`, end: `12/31/${i}`, label: "Q4" });
     }
 
-    dataOutput = { ranks, animeTitles, episodesAired, airespans, categories: [{ category: years }, { category: yearQuarters }] };
+    dataOutput = { animeTitles, categories: [{ category: years }, { category: yearQuarters }] };
 
     return dataOutput;
 }
