@@ -43,6 +43,8 @@ To run the server, run `node server.js` from the root of the project. This will 
 ## Visualizations
 The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/visualizations) shown on the dashboard help to answer the following questions:
 - ### *Given the average number of members per each year an anime started airing, approximately what year(s) did each type of anime media start becoming popular?*
+  >\**OVA = original video animation; anime released directly to home video format (what westerners know as “direct-to-video”)*<br />
+  >\**ONA = original net animation (anime released directly to the internet)*
   ><img alt="avg_membership_per_year" src="https://user-images.githubusercontent.com/32036244/206883820-9d03bec6-4d4f-42b1-88cc-59d89d3f8915.png" />
   - This line graph (*created by [React Plotly](https://reactjs.org/)*) shows the trending average number of members per anime media type that has been released per year.
     
@@ -80,11 +82,9 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     - Express Route: [DailyModeBroadcastTimesPerAgeRating.js](https://github.com/evansjt/AnimeViz/blob/main/routes/DailyModeBroadcastTimesPerAgeRating.js)<br />*(Route address: [/daily-mode-bc-times-per-rating/**:TZ**](https://anime-dataviz.onrender.com/daily-mode-bc-times-per-rating/JST)* [where **:TZ** = any supported timezone abbreviation (e.g. JST, PST, EST, etc.)]*)*
     - Database Query: [GetDailyModeBroadcastTimesPerAgeRating.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetDailyModeBroadcastTimesPerAgeRating.sql)
 - ### *What is the demographic breakdown among Boys Love and Girls Love titles?*
+  >\**Seinen = general youth audience*, \**Shoujo = young female audience*<br />
+  >\**Shounen = young male audience*, \**Josei = older female audience*<br />
   ><p align="center"><img alt="demographic_comp_bl_gl_titles" src="https://user-images.githubusercontent.com/32036244/206892876-84a8877c-3081-4092-8a9f-03b79794f4e0.png" height="500px" /></p>
-  >*Seinen = general youth audience<br />
-  >*Shoujo = young female audience<br />
-  >*Shounen = young male audience<br />
-  >*Josei = older female audience<br />
   - This bar chart (*created by [React Plotly](https://reactjs.org/)*) shows the comparison between the percentages of all Boys Love titles and Girls Love titles that are catered to certain demographic groups (Seinen*, Shoujo*, Shounen*, Josei*, Kids, or no specific demographic).
     - React Visualization: [DemographicsOfBLandGLTitles.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/DemographicsOfBLandGLTitles.jsx)
     - Express Route: [DemographicsOfBLandGLTitles.js](https://github.com/evansjt/AnimeViz/blob/main/routes/DemographicsOfBLandGLTitles.js) *(Route address: [/demographics-of-bl-gl-titles](https://anime-dataviz.onrender.com/demographics-of-bl-gl-titles))*
