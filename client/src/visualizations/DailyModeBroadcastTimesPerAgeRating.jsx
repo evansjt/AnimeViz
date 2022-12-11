@@ -24,10 +24,10 @@ function DailyModeBroadcastTimesPerAgeRating() {
         layout.title.text = `<b>${name} (${abbr})</b>`;
         setLayoutOtherTZ(layout);
 
-        drawPloyForTimeZone(setJSTData, moment.tz.zone('Asia/Tokyo').abbr(new Date()));
-        drawPloyForTimeZone(setDataOtherTZ, abbr);
+        drawPlotForTimeZone(setJSTData, moment.tz.zone('Asia/Tokyo').abbr(new Date()));
+        drawPlotForTimeZone(setDataOtherTZ, abbr);
 
-        function drawPloyForTimeZone(setData, timezone) {
+        function drawPlotForTimeZone(setData, timezone) {
             axios.get(`/daily-mode-bc-times-per-rating/${timezone}`, { crossdomain: true }).then(res => {
                 setData(Object.keys(res.data).map(rating => {
                     const modetimes = res.data[rating].modetimes.map(time => '1970-01-01 ' + time);
