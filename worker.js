@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, async () => {
-    console.log("Worker application listening.....");
+    console.log('\x1b[36m%s\x1b[0m', "Worker application listening.....");
     while (true) {
         console.time("JikanAPI2animedb");
         await fetchMetaData();

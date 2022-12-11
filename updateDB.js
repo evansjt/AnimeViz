@@ -101,9 +101,12 @@ export async function fetchMetaData() {
     let numPages = response.pagination.last_visible_page;
 
     const db = pgp(connection);
+
+    await db.none(fs.readFileSync('db/CreateAllTables.sql').toString().replace(/\n/g, " "));
+
     await (async () => {
         let localOrPublic = process.env.DATABASE_URI ? "public" : "local";
-        console.log(`Updating ${localOrPublic} database...`)
+        console.log('\x1b[33m%s\x1b[0m', `Updating ${localOrPublic} database...`)
         let sum = [];
         for (let i = numPages; i > 0; i--) {
             let pageSum = await fetchRetry(i).then(async resJSON => await updatePageInDB(db, resJSON));
@@ -113,6 +116,6 @@ export async function fetchMetaData() {
         return sum.reduce((partialSum, a) => partialSum + a, 0);
     })().then(data => {
         db.none('VACUUM');
-        console.log(`Database updated: ${data} rows inserted/affected.`);
+        console.log('\x1b[32m%s\x1b[0m', `Database updated: ${data} rows inserted/affected.`);
     }).finally(db.$pool.end);
 }
