@@ -25,7 +25,7 @@ function LongestRunningTVAnimeSeries() {
 
         axios.get(`/longest-running-tv-anime-series`, { crossdomain: true }).then(res => {
             dataSource.processes.process = res.data.animeTitles.map(({ rank }) => ({ label: rank }));
-            dataSource.tasks.task = res.data.animeTitles.map(({ airespan }) => ({ label: `Aired for ${airespan.daysAired} days`, start: airespan.airedFrom, end: airespan.airedTo }));
+            dataSource.tasks.task = res.data.animeTitles.map(({ airespan }) => ({ label: `Aired for ${Math.floor(airespan.daysAired / 365)} years, ${Math.floor(airespan.daysAired % 365 / 30)} months, and ${Math.floor(airespan.daysAired % 365 % 30)} days`, start: airespan.airedFrom, end: airespan.airedTo }));
             dataSource.datatable.datacolumn[0].text = res.data.animeTitles.map(({ title }) => ({ label: title }));;
             dataSource.datatable.datacolumn[1].text = res.data.animeTitles.map(({ episodesAired }) => ({ label: `${episodesAired}` }));
             dataSource.categories = res.data.categories;
