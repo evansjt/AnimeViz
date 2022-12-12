@@ -5,21 +5,20 @@ import { db } from '../server.js';
 export let avgMemPerYrRoute = express();
 
 function readSqlDataToOutput(rows, dataOutput) {
-    rows.forEach(row => {
-        let year = row["Year"];
-        let mediaType = row["Media Type"];
-        let avgMembers = row["Average Members"];
+    rows.forEach(({ "Media Type": mediaType }) => {
+        const years = rows.reduce((returnVal, { "Media Type": m, "Year": year }) => m === mediaType ? returnVal.concat(year) : returnVal, []);
+        const avgMembers = rows.reduce((returnVal, { "Media Type": m, "Average Members": avg }) => m === mediaType ? returnVal.concat(avg) : returnVal, []);
 
-        if (!dataOutput.hasOwnProperty(mediaType)) {
-            dataOutput[mediaType] = {
-                "Years": [],
-                "Average Members": []
-            };
-        }
+        const titlesWithMaxMembers = rows.reduce((returnVal, { "Media Type": m, title, members, "Title Count": count, url }) => {
+            if (m === mediaType) {
+                returnVal.push({ title: title, maxMembers: members, outOf: count, url: url })
+            }
+            return returnVal;
+        }, []);
 
-        dataOutput[mediaType]["Years"].push(year);
-        dataOutput[mediaType]["Average Members"].push(avgMembers);
+        dataOutput[mediaType] = { years, avgMembers, titlesWithMaxMembers }
     });
+
     return dataOutput;
 }
 

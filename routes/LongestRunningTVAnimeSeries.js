@@ -5,7 +5,7 @@ import { db } from '../server.js';
 export let longestRunningTVAnimeSeriesRoute = express();
 
 function readSqlDataToOutput(rows, dataOutput) {
-    const animeTitles = rows.map(r => ({ title: r.Title, rank: `#${r.rank}`, episodesAired: r['# Episodes'], airespan: { daysAired: r['Time Aired'], airedFrom: new Date(r['Aired From']).toLocaleDateString(), airedTo: new Date(r['Aired To']).toLocaleDateString() } }));
+    const animeTitles = rows.map(r => ({ title: r.Title, url: r.url, rank: `#${r.rank}`, episodesAired: r['# Episodes'], airespan: { daysAired: r['Time Aired'], airedFrom: new Date(r['Aired From']).toLocaleDateString(), airedTo: new Date(r['Aired To']).toLocaleDateString() } }));
 
     const minYear = rows.reduce((min, { 'Aired From': y }) => min === null || new Date(y).getFullYear() < min ? new Date(y).getFullYear() : min, null);
     const maxYear = rows.reduce((max, { 'Aired To': y }) => max === null || new Date(y).getFullYear() > max ? new Date(y).getFullYear() : max, null);

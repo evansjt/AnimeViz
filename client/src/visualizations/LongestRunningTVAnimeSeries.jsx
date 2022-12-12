@@ -35,10 +35,12 @@ function LongestRunningTVAnimeSeries() {
             const aireDaysX = res.data.animeTitles.map(({ airespan }) => airespan.daysAired);
             const episodesX = res.data.animeTitles.map(({ episodesAired }) => episodesAired);
             const y = res.data.animeTitles.map((a, i) => `${a.rank}: ${a.title}`);
+            const urls = res.data.animeTitles.map(({ url }) => url);
 
             let barData = [{
                 x: aireDaysX,
                 y: y,
+                link: urls,
                 type: 'bar',
                 orientation: 'h',
                 name: '# days aired',
@@ -51,6 +53,7 @@ function LongestRunningTVAnimeSeries() {
             }, {
                 x: episodesX,
                 y: y,
+                link: urls,
                 type: 'bar',
                 orientation: 'h',
                 name: '# episodes aired',
@@ -70,7 +73,15 @@ function LongestRunningTVAnimeSeries() {
         <>
             <div>
                 <div style={{ height: 600 }}>
-                    <Plot id="top50longestairedanime-data-viz" className="dataplot" data={barData} layout={layout} style={{ height: "100%", width: "100%" }} />
+                    <Plot id="top50longestairedanime-data-viz" className="dataplot"
+                        onClick={data => {
+                            const x = data.points[0].x;
+                            const pointData = data.points[0].data;
+                            const xIndex = pointData.x.indexOf(x);
+                            const url = pointData.link[xIndex];
+                            window.open(url, '_blank').focus();
+                        }}
+                        data={barData} layout={layout} style={{ height: "100%", width: "100%" }} />
                 </div>
                 <div style={{ height: 600 }}>
                     <ReactFC className="dataplot" type="gantt" dataFormat="JSON" dataSource={ganttDataSource} width="100%" height={600} />
