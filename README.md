@@ -101,7 +101,7 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     - Express Route: [CollaboratingLicensorsAndStudios.js](https://github.com/evansjt/AnimeViz/blob/main/routes/CollaboratingLicensorsAndStudios.js) *(Route address: [/collab-lics-studs](https://anime-dataviz.onrender.com/collab-lics-studs))*
     - Database Query: [GetCollaboratingLicensorsAndStudios.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetCollaboratingLicensorsAndStudios.sql)
 - ### *What is the longest-running anime TV series?*
-  ><p align="center"><img alt="top_50_longest_running_anime_tv" src="https://user-images.githubusercontent.com/32036244/206894556-ad2e07f0-214d-4df1-8a40-fc88b60ed9ea.png" width="50%" /></p>
+  ><p align="center"><img alt="top_50_longest_running_anime_tv" src="https://user-images.githubusercontent.com/32036244/207158178-702e4bff-6bf1-410d-9577-62fa3f48c9b2.png" width="50%" /></p>
   - The horizontal bar char (*created by [React Plotly](https://reactjs.org/)*) shows the relationship between the number of days aired and the number of episodes aired from each of the Top 50 longest running anime TV series. Upon clicking any of the bars related to a specific anime title, a new tab will open and redirect the user to the MyAnimeList webpage related to that anime.
     
     The Gantt chart (*created by [React FusionCharts](https://www.fusioncharts.com/dev/getting-started/react/your-first-chart-using-react)*) compares the timespans between each anime's airing, taking in account their start and end dates.
