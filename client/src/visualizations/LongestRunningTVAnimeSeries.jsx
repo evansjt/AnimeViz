@@ -11,7 +11,7 @@ const layout = { title: { text: '<b>Top 50 Longest Running Anime TV Series</b><b
 const staticGanttDataSource = {
     chart: { dateformat: "mm/dd/yyyy", theme: "fusion", canvasborderalpha: "40", useVerticalScrolling: "1", GanttWidthPercent: "80", ganttlinealpha: "50", ganttPaneDuration: "10", ganttPaneDurationUnit: "y", scrollToDate: new Date().toLocaleString() },
     processes: { fontsize: "12", isbold: "1", align: "left", headerText: "Rank", headerFontSize: "14", headerVAlign: "bottom", headerAlign: "left", process: [] },
-    datatable: { datacolumn: [{ headertext: "Anime Title", headerfontsize: "14", headervalign: "bottom", headeralign: "left", align: "left", fontsize: "12", text: [] }, { headertext: "# episodes", headerfontsize: "14", headervalign: "bottom", headeralign: "left", align: "left", fontsize: "12", text: [] }] },
+    datatable: { datacolumn: [{ headertext: "Anime Title", headerfontsize: "14", headervalign: "bottom", headeralign: "left", align: "left", fontsize: "12", text: [] }, { headertext: "Status", headerfontsize: "14", headervalign: "bottom", headeralign: "left", align: "left", fontsize: "12", text: [] }, { headertext: "# episodes", headerfontsize: "14", headervalign: "bottom", headeralign: "left", align: "left", fontsize: "12", text: [] }] },
     categories: [],
     tasks: { color: "#5D62B5", task: [] }
 };
@@ -26,8 +26,9 @@ function LongestRunningTVAnimeSeries() {
         axios.get(`/longest-running-tv-anime-series`, { crossdomain: true }).then(res => {
             dataSource.processes.process = res.data.animeTitles.map(({ rank }) => ({ label: rank }));
             dataSource.tasks.task = res.data.animeTitles.map(({ airespan }) => ({ label: `Aired for ${Math.floor(airespan.daysAired / 365)} years, ${Math.floor(airespan.daysAired % 365 / 30)} months, and ${Math.floor(airespan.daysAired % 365 % 30)} days`, start: airespan.airedFrom, end: airespan.airedTo }));
-            dataSource.datatable.datacolumn[0].text = res.data.animeTitles.map(({ title }) => ({ label: title }));;
-            dataSource.datatable.datacolumn[1].text = res.data.animeTitles.map(({ episodesAired }) => ({ label: `${episodesAired}` }));
+            dataSource.datatable.datacolumn[0].text = res.data.animeTitles.map(({ title }) => ({ label: title }));
+            dataSource.datatable.datacolumn[1].text = res.data.animeTitles.map(({ status }) => ({ label: status }));
+            dataSource.datatable.datacolumn[2].text = res.data.animeTitles.map(({ episodesAired }) => ({ label: `${episodesAired != null ? episodesAired : '?'}` }));
             dataSource.categories = res.data.categories;
 
             setGanttDataSource(dataSource);
