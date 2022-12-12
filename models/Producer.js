@@ -12,6 +12,6 @@ export class Producer {
     }
 
     getSQLScript() {
-        return 'db/UpsertProducer.sql';
+        return 'db/insert-update-delete/UpsertProducer.sql';
     }
 }

@@ -12,6 +12,6 @@ export class Demographic {
     }
 
     getSQLScript() {
-        return 'db/UpsertDemographic.sql';
+        return 'db/insert-update-delete/UpsertDemographic.sql';
     }
 }

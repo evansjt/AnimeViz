@@ -27,7 +27,7 @@ function readSqlDataToOutput(rows, dataOutput) {
 
 function querySqlData(callback, data) {
     return new Promise((resolve, reject) => {
-        let sqlFilename = './db/GetCollaboratingLicensorsAndStudios.sql';
+        let sqlFilename = './db/select/GetCollaboratingLicensorsAndStudios.sql';
         let sql = fs.readFileSync(sqlFilename).toString().replace(/\n/g, " ");
 
         db.many(sql).then(rows => {

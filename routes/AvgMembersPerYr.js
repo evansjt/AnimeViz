@@ -25,7 +25,7 @@ function readSqlDataToOutput(rows, dataOutput) {
 
 function querySqlData(callback, data) {
     return new Promise((resolve, reject) => {
-        let sql = fs.readFileSync('./db/GetAverageMembershipPerYear.sql').toString().replace(/\n/g, " ");
+        let sql = fs.readFileSync('./db/select/GetAverageMembershipPerYear.sql').toString().replace(/\n/g, " ");
 
         db.many(sql).then(rows => {
             resolve(callback(rows, data));

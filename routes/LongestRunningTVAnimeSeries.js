@@ -27,7 +27,7 @@ function readSqlDataToOutput(rows, dataOutput) {
 
 function querySqlData(callback, data) {
     return new Promise((resolve, reject) => {
-        let sqlFilename = './db/GetTop50LongestRunningTVAnime.sql';
+        let sqlFilename = './db/select/GetTop50LongestRunningTVAnime.sql';
         let sql = fs.readFileSync(sqlFilename).toString().replace(/\n/g, " ");
 
         db.many(sql).then(rows => {

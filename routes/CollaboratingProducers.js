@@ -49,10 +49,10 @@ function readSqlDataToOutput(rows, dataOutput) {
 
 function querySqlData(callback, data) {
     return new Promise((resolve, reject) => {
-        let sqlFilename = './db/GetAllCollaboratingProducers.sql';
+        let sqlFilename = './db/select/GetAllCollaboratingProducers.sql';
         let sqlParams = [];
         if (data.n) {
-            sqlFilename = './db/GetTopNthCollaboratingProducers.sql';
+            sqlFilename = './db/select/GetTopNthCollaboratingProducers.sql';
             sqlParams.push(data.n);
         }
         let sql = fs.readFileSync(sqlFilename).toString().replace(/\n/g, " ");

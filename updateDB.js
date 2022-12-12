@@ -32,7 +32,7 @@ function updatePageInDB(db, page) {
     return db.tx(t1 => {
         let res = page['data'].map(animeData => {
             let anime = new Anime(animeData);
-            let sql = fs.readFileSync('db/UpsertAnime.sql').toString().replace(/\n/g, " ");
+            let sql = fs.readFileSync('db/insert-update-delete/UpsertAnime.sql').toString().replace(/\n/g, " ");
             let queries = [t1.result(sql, Object.values(anime), r => r.rowCount)];
             let relationalTables = [Demographic, Licensor, Genre, Producer, Studio, Theme];
             queries.push(...relationalTables.map(rt => insertIntoRelationalTable(rt)).filter(i => typeof i !== 'undefined'));
@@ -102,7 +102,7 @@ export async function fetchMetaData() {
 
     const db = pgp(connection);
 
-    await db.none(fs.readFileSync('db/CreateAllTables.sql').toString().replace(/\n/g, " "));
+    await db.none(fs.readFileSync('db/insert-update-delete/CreateAllTables.sql').toString().replace(/\n/g, " "));
 
     await (async () => {
         let localOrPublic = process.env.DATABASE_URI ? "public" : "local";

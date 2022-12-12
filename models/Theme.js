@@ -12,6 +12,6 @@ export class Theme {
     }
 
     getSQLScript() {
-        return 'db/UpsertTheme.sql';
+        return 'db/insert-update-delete/UpsertTheme.sql';
     }
 }

@@ -12,6 +12,6 @@ export class Licensor {
     }
 
     getSQLScript() {
-        return 'db/UpsertLicensor.sql';
+        return 'db/insert-update-delete/UpsertLicensor.sql';
     }
 }

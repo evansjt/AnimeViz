@@ -12,6 +12,6 @@ export class Genre {
     }
 
     getSQLScript() {
-        return 'db/UpsertGenre.sql';
+        return 'db/insert-update-delete/UpsertGenre.sql';
     }
 }

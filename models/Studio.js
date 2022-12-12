@@ -12,6 +12,6 @@ export class Studio {
     }
 
     getSQLScript() {
-        return 'db/UpsertStudio.sql';
+        return 'db/insert-update-delete/UpsertStudio.sql';
     }
 }

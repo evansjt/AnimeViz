@@ -51,13 +51,13 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     Members are users who have added an anime entry to a list linked to their account on MyAnimeList.net; this line chart should not implied to be interpretted as a series of sequential events, but rather an aggregation of special interests in anime that had been released in years now or prior. \[E.g., Someone could not have become a member of the *Astro Boy* anime when it was first aired in the 1960s&#8212;(since MyAnimeList.net didn't exist back then)&#8212;but someone who wanted to watch reruns of *Astro Boy* today could become a member of that anime if they added that entry to a list on their MyAnimeList account.\]
     - React Visualization: [AvgMembersPerYear.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/AvgMembersPerYear.jsx)
     - Express Route: [AvgMembersPerYr.js](https://github.com/evansjt/AnimeViz/blob/main/routes/AvgMembersPerYr.js) *(Route address: [/avg-mem-per-yr](https://anime-dataviz.onrender.com/avg-mem-per-yr))*
-    - Database Query: [GetAverageMembershipPerYear.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetAverageMembershipPerYear.sql)
+    - Database Query: [GetAverageMembershipPerYear.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetAverageMembershipPerYear.sql)
 - ### *Among the last five years, which quarter of the year are anime TV shows most popular?*
   ><p align="center"><img alt="quarterly_membership_per_last_5_years" src="https://user-images.githubusercontent.com/32036244/206889889-74bb14bd-c6cd-45f3-9eea-469a78b421b6.png" height="500px" /></p>
   - This radial graph (*created by [React Plotly](https://reactjs.org/)*) shows the sum of memberships for all anime media released in a certain quarter for each year over the past 5 years (e.g., one point can represent the total number of members of all anime released within the spring of the year 2019).
     - React Visualization: [QuarterlyMembersPerLast5Years.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/QuarterlyMembersPerLast5Years.jsx)
     - Express Route: [QuarterlyMembersPerLast5Years.js](https://github.com/evansjt/AnimeViz/blob/main/routes/QuarterlyMembersPerLast5Years.js) *(Route address: [/qtly-mem-per-lst5yrs](https://anime-dataviz.onrender.com/qtly-mem-per-lst5yrs))*
-    - Database Query: [GetQuarterlyMembersPerLast5Years.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetQuarterlyMembersPerLast5Years.sql)
+    - Database Query: [GetQuarterlyMembersPerLast5Years.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetQuarterlyMembersPerLast5Years.sql)
 - ### *What is the composition of age ratings among anime media within the Boys Love genre?*
   >\**Boys Love* = *Japanese fictional media that features romantic/homoerotic relationships between male characters*
   ><p align="center"><img alt="age_rating_composition_of_bl_titles" src="https://user-images.githubusercontent.com/32036244/206890851-112f95d5-4d94-4ea0-8df1-3eb8e0d87f0a.png" height="500px" /></p>
@@ -66,13 +66,13 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     Upon hovering over a section of the pie chart, the element underneath the chart will show a list of the Top 10 most popular Boys Love anime titles as well as links to those titles on MyAnimeList.net. Upon hovering over each title, the image shown within the element will change to that associated with the given title.
     - React Visualization: [AgeRatingCompOfBLGenre.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/AgeRatingCompOfBLGenre.jsx)
     - Express Route: [AgeRatingCompOfBLGenre.js](https://github.com/evansjt/AnimeViz/blob/main/routes/AgeRatingCompOfBLGenre.js) *(Route address: [/age-rating-comp-of-bl-genre](https://anime-dataviz.onrender.com/age-rating-comp-of-bl-genre))*
-    - Database Query: [GetTop10BLAnimePerAgeRating.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetTop10BLAnimePerAgeRating.sql)
+    - Database Query: [GetTop10BLAnimePerAgeRating.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetTop10BLAnimePerAgeRating.sql)
 - ### *Which anime producers have collaborated with each other the most?*
   ><img alt="freq_of_collab_bw_prods" src="https://user-images.githubusercontent.com/32036244/206891741-8efab7ba-e687-4876-afd0-80e0c0ef1674.png" />
   - This network diagram (*created by [Cytoscape.js](https://js.cytoscape.org/)*)) displays the relationship between the top *N* anime producers (*N* can be set from 2 to the maximum number of existing producers by entering a number into the number field and clicking the "Generate" button). Each node is represented by individual producers of anime media and each edge is represented by at least one collaboration between two producers. The weight (or thickness) of each edge is relative to the number of collaborations between the two given producers. The graph's view is zoomable and pannable upon scroll and drag, respectively, and each node can be dragged around the graph.
     - React Visualization: [CollaboratingProducers.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/CollaboratingProducers.jsx)
     - Express Route: [CollaboratingProducers.js](https://github.com/evansjt/AnimeViz/blob/main/routes/CollaboratingProducers.js)<br />*(Route address: [/collab-prods/**:n**](https://anime-dataviz.onrender.com/collab-prods/10)* [where **:n** = top **n** producers with the most collaborations]*)*
-    - Database Query: [GetTopNthCollaboratingProducers.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetTopNthCollaboratingProducers.sql)
+    - Database Query: [GetTopNthCollaboratingProducers.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetTopNthCollaboratingProducers.sql)
 - ### *Among each age rating, what is the comparison between the most frequently aired time of day (JST) per day of the week?*
   ><p align="center"><img alt="mode_bc_times_among_age_ratings" src="https://user-images.githubusercontent.com/32036244/206892170-a98e4a4c-401e-40ae-b6be-c4dcb2485409.png" height="500px" /></p>
   - This visualization, created using two radial graphs (*created by [React Plotly](https://reactjs.org/)*), shows the most frequent broadcast times per day of the week for each broadcasted anime containing a certain age rating.
@@ -80,7 +80,7 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     Since time is relative to each region of the world, it was pertinent to include two different radar charts: one that shows the most frequent broadcast times (per day of the week) in Japan Standard Time (JST), and another that shows the same times converted to another timezone (such as US mainland timezones: PST, MST, CST, EST). To set a specific timezone, use the searchbox marked with the label "See broadcast times in another timezone:" to find a known timezone under the given list.
     - React Visualization: [DailyModeBroadcastTimesPerAgeRating.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/DailyModeBroadcastTimesPerAgeRating.jsx)
     - Express Route: [DailyModeBroadcastTimesPerAgeRating.js](https://github.com/evansjt/AnimeViz/blob/main/routes/DailyModeBroadcastTimesPerAgeRating.js)<br />*(Route address: [/daily-mode-bc-times-per-rating/**:TZ**](https://anime-dataviz.onrender.com/daily-mode-bc-times-per-rating/JST)* [where **:TZ** = any supported timezone abbreviation (e.g. JST, PST, EST, etc.)]*)*
-    - Database Query: [GetDailyModeBroadcastTimesPerAgeRating.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetDailyModeBroadcastTimesPerAgeRating.sql)
+    - Database Query: [GetDailyModeBroadcastTimesPerAgeRating.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetDailyModeBroadcastTimesPerAgeRating.sql)
 - ### *What is the demographic breakdown among Boys Love and Girls Love titles?*
   >\***Boys Love* = *Japanese fictional media that features romantic/homoerotic relationships between male characters*<br />
   >\***Girls Love* = *Japanese fictional media that features romantic/homoerotic relationships between female characters*<br />
@@ -90,13 +90,13 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
   - This bar chart (*created by [React Plotly](https://reactjs.org/)*) shows the comparison between the percentages of all Boys Love** titles and Girls Love** titles that are catered to certain demographic groups (Seinen*, Shoujo*, Shounen*, Josei*, Kids, or no specific demographic).
     - React Visualization: [DemographicsOfBLandGLTitles.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/DemographicsOfBLandGLTitles.jsx)
     - Express Route: [DemographicsOfBLandGLTitles.js](https://github.com/evansjt/AnimeViz/blob/main/routes/DemographicsOfBLandGLTitles.js) *(Route address: [/demographics-of-bl-gl-titles](https://anime-dataviz.onrender.com/demographics-of-bl-gl-titles))*
-    - Database Query: [GetBLAndGLDemographic.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetBLAndGLDemographic.sql)
+    - Database Query: [GetBLAndGLDemographic.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetBLAndGLDemographic.sql)
 - ### *Which licensors and studios have worked with each other the most frequently?*
   ><p align="center"><img alt="freq_of_collab_bw_lic_stud" src="https://user-images.githubusercontent.com/32036244/206894159-9e93ad9b-7fa1-4502-9268-3e8d558ae990.png" width="50%" /></p>
   - This heat map (*created by [React Plotly](https://reactjs.org/)*) shows mappings between each existing licensor and each existing studio who have worked together as well as each mapping's color intensity (relative to the number of collaborations between each licensor and studio).
     - React Visualization: [CollaboratingLicensorsAndStudios.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/CollaboratingLicensorsAndStudios.jsx)
     - Express Route: [CollaboratingLicensorsAndStudios.js](https://github.com/evansjt/AnimeViz/blob/main/routes/CollaboratingLicensorsAndStudios.js) *(Route address: [/collab-lics-studs](https://anime-dataviz.onrender.com/collab-lics-studs))*
-    - Database Query: [GetCollaboratingLicensorsAndStudios.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetCollaboratingLicensorsAndStudios.sql)
+    - Database Query: [GetCollaboratingLicensorsAndStudios.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetCollaboratingLicensorsAndStudios.sql)
 - ### *What is the longest-running anime TV series?*
   ><p align="center"><img alt="top_50_longest_running_anime_tv" src="https://user-images.githubusercontent.com/32036244/206894556-ad2e07f0-214d-4df1-8a40-fc88b60ed9ea.png" width="50%" /></p>
   - The horizontal bar char (*created by [React Plotly](https://reactjs.org/)*) shows the relationship between the number of days aired and the number of episodes aired from each of the Top 50 longest running anime TV series.
@@ -104,5 +104,5 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     The Gantt chart (*created by [React FusionCharts](https://www.fusioncharts.com/dev/getting-started/react/your-first-chart-using-react)*) compares the timespans between each anime's airing, taking in account their start and end dates.
     - React Visualization: [LongestRunningTVAnimeSeries.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/LongestRunningTVAnimeSeries.jsx)
     - Express Route: [LongestRunningTVAnimeSeries.js](https://github.com/evansjt/AnimeViz/blob/main/routes/LongestRunningTVAnimeSeries.js) *(Route address: [/longest-running-tv-anime-series](https://anime-dataviz.onrender.com/longest-running-tv-anime-series))*
-    - Database Query: [GetTop50LongestRunningTVAnime.sql](https://github.com/evansjt/AnimeViz/blob/main/db/GetTop50LongestRunningTVAnime.sql)
+    - Database Query: [GetTop50LongestRunningTVAnime.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetTop50LongestRunningTVAnime.sql)
 
