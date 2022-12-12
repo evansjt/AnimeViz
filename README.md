@@ -42,13 +42,13 @@ To run the server, run `node server.js` from the root of the project. This will 
 
 ## Visualizations
 The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/visualizations) shown on the dashboard help to answer the following questions:
-- ### *Given the average number of members per each year an anime started airing, approximately what year(s) did each type of anime media start becoming popular?*
+- ### *Given the average number of members of all anime titles released per year, approximately what year(s) released is each type of anime media most popular?*
   >\**OVA = original video animation; anime released directly to home video format (what westerners know as “direct-to-video”)*<br />
   >\**ONA = original net animation (anime released directly to the internet)*
   ><img alt="avg_membership_per_year" src="https://user-images.githubusercontent.com/32036244/206972002-3b036c5a-3ba9-4d87-bff1-1b85b55b9f16.png" />
   - This line graph (*created by [React Plotly](https://reactjs.org/)*) shows the trending average number of members per anime media type that has been released per year.
     
-    Members are users who have added an anime entry to a list linked to their account on MyAnimeList.net; this line chart should not implied to be interpretted as a series of sequential events, but rather an aggregation of special interests in anime that had been released in years now or prior. \[E.g., Someone could not have become a member of the *Astro Boy* anime when it was first aired in the 1960s&#8212;(since MyAnimeList.net didn't exist back then)&#8212;but someone who wanted to watch reruns of *Astro Boy* today could become a member of that anime if they added that entry to a list on their MyAnimeList account.\]
+    Members are users who have added an anime entry to a list linked to their account on MyAnimeList.net; this line chart should not implied to be interpreted as a series of sequential events, but rather an aggregation of special interests in anime that had been released in years now or prior. \[E.g., Someone could not have become a member of the *Astro Boy* anime when it was first aired in the 1960s&#8212;(since MyAnimeList.net didn't exist back then)&#8212;but someone who wanted to watch reruns of *Astro Boy* today could become a member of that anime if they added that entry to a list on their MyAnimeList account.\]
     
     Upon hovering over a point, a label will not only show the average membership of anime titles of a certain media type released during that year, but also the anime title released during that year with the most members. The user may also click on that point to open a new tab to the MyAnimeList webpage of that title.
     - React Visualization: [AvgMembersPerYear.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/AvgMembersPerYear.jsx)
