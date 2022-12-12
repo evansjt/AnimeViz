@@ -108,4 +108,3 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     - React Visualization: [LongestRunningTVAnimeSeries.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/LongestRunningTVAnimeSeries.jsx)
     - Express Route: [LongestRunningTVAnimeSeries.js](https://github.com/evansjt/AnimeViz/blob/main/routes/LongestRunningTVAnimeSeries.js) *(Route address: [/longest-running-tv-anime-series](https://anime-dataviz.onrender.com/longest-running-tv-anime-series))*
     - Database Query: [GetTop50LongestRunningTVAnime.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetTop50LongestRunningTVAnime.sql)
-
