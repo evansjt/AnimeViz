@@ -45,10 +45,12 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
 - ### *Given the average number of members per each year an anime started airing, approximately what year(s) did each type of anime media start becoming popular?*
   >\**OVA = original video animation; anime released directly to home video format (what westerners know as “direct-to-video”)*<br />
   >\**ONA = original net animation (anime released directly to the internet)*
-  ><img alt="avg_membership_per_year" src="https://user-images.githubusercontent.com/32036244/206883820-9d03bec6-4d4f-42b1-88cc-59d89d3f8915.png" />
+  ><img alt="avg_membership_per_year" src="https://user-images.githubusercontent.com/32036244/206972002-3b036c5a-3ba9-4d87-bff1-1b85b55b9f16.png" />
   - This line graph (*created by [React Plotly](https://reactjs.org/)*) shows the trending average number of members per anime media type that has been released per year.
     
     Members are users who have added an anime entry to a list linked to their account on MyAnimeList.net; this line chart should not implied to be interpretted as a series of sequential events, but rather an aggregation of special interests in anime that had been released in years now or prior. \[E.g., Someone could not have become a member of the *Astro Boy* anime when it was first aired in the 1960s&#8212;(since MyAnimeList.net didn't exist back then)&#8212;but someone who wanted to watch reruns of *Astro Boy* today could become a member of that anime if they added that entry to a list on their MyAnimeList account.\]
+    
+    Upon hovering over a point, a label will not only show the average membership of anime titles of a certain media type released during that year, but also the anime title released during that year with the most members. The user may also click on that point to open a new tab to the MyAnimeList webpage of that title.
     - React Visualization: [AvgMembersPerYear.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/AvgMembersPerYear.jsx)
     - Express Route: [AvgMembersPerYr.js](https://github.com/evansjt/AnimeViz/blob/main/routes/AvgMembersPerYr.js) *(Route address: [/avg-mem-per-yr](https://anime-dataviz.onrender.com/avg-mem-per-yr))*
     - Database Query: [GetAverageMembershipPerYear.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetAverageMembershipPerYear.sql)
@@ -59,7 +61,8 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     - Express Route: [QuarterlyMembersPerLast5Years.js](https://github.com/evansjt/AnimeViz/blob/main/routes/QuarterlyMembersPerLast5Years.js) *(Route address: [/qtly-mem-per-lst5yrs](https://anime-dataviz.onrender.com/qtly-mem-per-lst5yrs))*
     - Database Query: [GetQuarterlyMembersPerLast5Years.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetQuarterlyMembersPerLast5Years.sql)
 - ### *What is the composition of age ratings among anime media within the Boys Love genre?*
-  >\**Boys Love* = *Japanese fictional media that features romantic/homoerotic relationships between male characters*
+  >\**Boys Love* = *Japanese fictional media that features romantic/homoerotic relationships between male characters*<br />
+  >\**Hentai「変態*」 = *(lit.trans.: “pervert”) a subset of anime media which contains adult-only pornographic content*
   ><p align="center"><img alt="age_rating_composition_of_bl_titles" src="https://user-images.githubusercontent.com/32036244/206890851-112f95d5-4d94-4ea0-8df1-3eb8e0d87f0a.png" height="500px" /></p>
   - This pie chart (*created by [React Plotly](https://reactjs.org/)*) shows the composition of anime titles in the Boys Love genre containing a certain age rating.
   
@@ -99,7 +102,7 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
     - Database Query: [GetCollaboratingLicensorsAndStudios.sql](https://github.com/evansjt/AnimeViz/blob/main/db/select/GetCollaboratingLicensorsAndStudios.sql)
 - ### *What is the longest-running anime TV series?*
   ><p align="center"><img alt="top_50_longest_running_anime_tv" src="https://user-images.githubusercontent.com/32036244/206894556-ad2e07f0-214d-4df1-8a40-fc88b60ed9ea.png" width="50%" /></p>
-  - The horizontal bar char (*created by [React Plotly](https://reactjs.org/)*) shows the relationship between the number of days aired and the number of episodes aired from each of the Top 50 longest running anime TV series.
+  - The horizontal bar char (*created by [React Plotly](https://reactjs.org/)*) shows the relationship between the number of days aired and the number of episodes aired from each of the Top 50 longest running anime TV series. Upon clicking any of the bars related to a specific anime title, a new tab will open and redirect the user to the MyAnimeList webpage related to that anime.
     
     The Gantt chart (*created by [React FusionCharts](https://www.fusioncharts.com/dev/getting-started/react/your-first-chart-using-react)*) compares the timespans between each anime's airing, taking in account their start and end dates.
     - React Visualization: [LongestRunningTVAnimeSeries.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/LongestRunningTVAnimeSeries.jsx)
