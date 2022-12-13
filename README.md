@@ -89,7 +89,7 @@ The [visualizations](https://github.com/evansjt/AnimeViz/tree/main/client/src/vi
   >\***Girls Love* = *Japanese fictional media that features romantic/homoerotic relationships between female characters*<br />
   >\*Josei「女性」= older female audience, \*Shoujo「少女」= younger female audience<br />
   >\*Seinen「青年」= older male audience, \*Shounen「少年」= younger male audience,<br />
-  ><p align="center"><img alt="demographic_comp_bl_gl_titles" src="https://user-images.githubusercontent.com/32036244/206892876-84a8877c-3081-4092-8a9f-03b79794f4e0.png" height="500px" /></p>
+  ><p align="center"><img alt="demographic_comp_bl_gl_titles" src="https://user-images.githubusercontent.com/32036244/207217250-f010b6af-2f90-421e-b73f-7c819a7bdc3a.png" height="500px" /></p>
   - This bar chart (*created by [React Plotly](https://reactjs.org/)*) shows the comparison between the percentages of all Boys Love** titles and Girls Love** titles that are catered to certain demographic groups (Josei*, Shoujo*, Seinen*, Shounen*, Kids, or no specific demographic).
     - React Visualization: [DemographicsOfBLandGLTitles.jsx](https://github.com/evansjt/AnimeViz/blob/main/client/src/visualizations/DemographicsOfBLandGLTitles.jsx)
     - Express Route: [DemographicsOfBLandGLTitles.js](https://github.com/evansjt/AnimeViz/blob/main/routes/DemographicsOfBLandGLTitles.js) *(Route address: [/demographics-of-bl-gl-titles](https://anime-dataviz.onrender.com/demographics-of-bl-gl-titles))*
