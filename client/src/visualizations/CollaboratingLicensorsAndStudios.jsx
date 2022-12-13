@@ -16,6 +16,7 @@ function CollaboratingLicensorsAndStudios() {
                 y: res.data.studios,
                 type: 'heatmap',
                 colorscale: 'Hot',
+                hovertemplate: `<b>Licensor:</b> %{x}<br /><b>Studio:</b> %{y}<br /><b># collabs.:</b> %{z}<extra></extra>`,
                 hoverongaps: false,
                 reversescale: true
             }]);
