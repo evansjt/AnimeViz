@@ -72,12 +72,14 @@ function CollaboratingProducers() {
                 <i style={{ fontSize: '14px' }}>(Raw data can be seen with API extension: /collab-prods/:n)<br />[:n is '{maxRange}' by default]</i>
                 <div style={{ width: 'fit-content', margin: 'auto', padding: 15 }}>
                     <label style={{ color: '#EFEFEF' }}>Top {n} Producers with the Most Collaborations (2-{maxRange}):</label>
-                    <input type="number" min={2} max={maxRange} value={value} onChange={e => {
-                        const val = e.target.value;
-                        if (val > 1 && val <= maxRange) setValue(val);
+                    <input type="number" min={2} max={maxRange} value={value} onChange={e => setValue(parseInt(e.target.value))} onBlur={e => {
+                        if (value > maxRange)
+                            setValue(maxRange)
+                        if (value < 2)
+                            setValue(2);
                     }} />
                     <div>
-                        <button onClick={e => setN(value)}>Generate!</button>
+                        <button onClick={e => { if (value <= maxRange && value >= 2) setN(value); }}>Generate!</button>
                         <button onClick={resetView}>Reset View</button>
                     </div>
                 </div>
