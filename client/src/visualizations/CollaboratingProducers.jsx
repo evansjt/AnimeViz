@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { useEffect, useState } from "react";
+import './cytoscape-loader.css';
 
 const stylesheet = [{ selector: 'node', style: { label: "data(label)", 'background-color': 'black', 'font-size': "data(fontSize)", 'text-halign': 'center', 'text-valign': 'center', 'text-outline-color': 'white', 'text-outline-width': "data(outlineWidth)", width: "data(radius)", height: "data(radius)" } }, { selector: 'edge', style: { width: "data(width)" } }, { selector: 'core', style: { 'active-bg-size': 0 } }];
 
@@ -10,6 +11,7 @@ function CollaboratingProducers() {
     const [resetView, setResetView] = useState(() => { });
 
     useEffect(() => {
+        $("#loader").show();
         axios.get(`/collab-prods/${n}`, { crossdomain: true }).then(res => {
             const elements = res.data.elements;
             setMaxRange(res.data.maxRange);
@@ -43,6 +45,7 @@ function CollaboratingProducers() {
                     cy.elements().forEach(ele => {
                         makePopperWithTippy(ele);
                     });
+                    $("#loader").hide();
                 });
 
                 cy.elements().unbind('mouseover');
@@ -79,8 +82,11 @@ function CollaboratingProducers() {
                     </div>
                 </div>
             </div>
-            <div id="networkGraph" className="dataplot" style={{ height: '500px', backgroundColor: 'lightgray' }}></div>
-        </div>
+            <div style={{ height: '500px', backgroundColor: 'lightgray', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+                <div id="loader"></div>
+                <div id="networkGraph" className="dataplot" style={{ height: '100%', width: '100%', position: 'absolute' }} ></div>
+            </div>
+        </div >
     );
 
 }

@@ -13,12 +13,14 @@ function getNodesAndEdges(arr) {
         let srcId = row['src'].toString();
         let tgtId = row['tgt'].toString();
         let src_collabs = parseInt(row['src_collabs']);
+        let src_rank = parseInt(row['src_rank']);
         let tgt_collabs = parseInt(row['tgt_collabs']);
+        let tgt_rank = parseInt(row['tgt_rank']);
         let weight = parseInt(row['weight']);
 
         edges.push({ data: { id: `${srcId}_${tgtId}`, source: srcId, target: tgtId, weight: weight, width: weight / 10, text: `${row['Source Producer']} + ${row['Target Producer']}: ${weight} collabs.` } });
 
-        const checkIfNodeExists = (nodeId, collabs, label) => {
+        const checkIfNodeExists = (nodeId, collabs, rank, label) => {
             if (!nodes[nodeId]) {
                 let radius = collabs / 10;
                 nodes[nodeId] = {
@@ -29,14 +31,14 @@ function getNodesAndEdges(arr) {
                         fontSize: radius / 4,
                         outlineWidth: radius / 50,
                         label: label,
-                        text: `${label} collaborated with ${collabs} other producers`
+                        text: `#${rank}: ${label} collaborated with ${collabs} other producers`
                     }
                 };
             }
         }
 
-        checkIfNodeExists(srcId, src_collabs, row['Source Producer']);
-        checkIfNodeExists(tgtId, tgt_collabs, row['Target Producer']);
+        checkIfNodeExists(srcId, src_collabs, src_rank, row['Source Producer']);
+        checkIfNodeExists(tgtId, tgt_collabs, tgt_rank, row['Target Producer']);
     });
 
     return { elements: { nodes: Object.values(nodes), edges: edges }, maxRange: maxRank };
